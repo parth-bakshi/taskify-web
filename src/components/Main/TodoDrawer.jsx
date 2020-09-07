@@ -18,6 +18,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import CategoryIcon from '@material-ui/icons/Category';
+
+import AddTodo from "../Todo/AddTodo";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -58,8 +61,14 @@ function TodoDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [openTodo, setOpenTodo] = React.useState(Boolean);
 
-  const handleDrawerToggle = () => {
+  const handleAddTodo =()=>{
+    console.log("open tru")
+    setOpenTodo(true);
+   }
+ 
+   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
@@ -76,10 +85,11 @@ function TodoDrawer(props) {
           </ListItem>
 
 
-          <ListItem button onClick={()=>{alert("Add")}}>
+          <ListItem button onClick={handleAddTodo}>
             <ListItemIcon><AddCircleIcon /></ListItemIcon>
             <ListItemText primary={"Add Todo"} />
           </ListItem>
+          <AddTodo open={openTodo} onClose={()=>{setOpenTodo(!openTodo)}} />
 
 
       </List>
@@ -150,6 +160,7 @@ function TodoDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
+          TodoList is Here
        </Typography>
      
       </main>
