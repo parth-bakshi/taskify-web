@@ -20,6 +20,7 @@ import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import CategoryIcon from '@material-ui/icons/Category';
 
 import AddTodo from "../Todo/AddTodo";
+import SimpleCard from './card';
 
 const drawerWidth = 240;
 
@@ -56,12 +57,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const tempArrayTasks = [{
+                      name:"abc",
+                      category:"Home",
+                      date:"23-10-2020",
+                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+                      lvc pqrstu vwxyz",
+                      completeStatus:false
+                    }
+                  ]
+const tempArrayCategory = ["personal", "Work", "Shopping", "custom"];
+
 function TodoDrawer(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openTodo, setOpenTodo] = React.useState(Boolean);
+  const [categories, setcategories] = React.useState(tempArrayCategory);
+  const [tasks,setTasks] = React.useState(tempArrayTasks); 
+  //need to fetch data for above 2 state in componentdidmount
 
   const handleAddTodo =()=>{
     console.log("open tru")
@@ -77,6 +95,11 @@ function TodoDrawer(props) {
       <div className={classes.toolbar} />
       {/* <Divider /> */}
       <List>
+          
+          <ListItem>
+            {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
+            <ListItemText primary="User's Name" />
+          </ListItem>
         
 
          <ListItem button onClick={()=>{alert("My day")}}>
@@ -91,16 +114,40 @@ function TodoDrawer(props) {
           </ListItem>
           <AddTodo open={openTodo} onClose={()=>{setOpenTodo(!openTodo)}} />
 
+          <ListItem button>
+            <ListItemIcon><AddCircleIcon /></ListItemIcon>
+            <ListItemText primary={"All"} />
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon><AddCircleIcon /></ListItemIcon>
+            <ListItemText primary={"Completed Tasks"} />
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon><AddCircleIcon /></ListItemIcon>
+            <ListItemText primary={"Incomplete Tasks"} />
+          </ListItem>
+
 
       </List>
       <Divider />
       <List>
-        {["personal", "Work", "Home"].map((text, index) => (
+        {categories.map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon><CategoryIcon /></ListItemIcon>
+            <ListItemIcon>
+              {text==="custom"?<CategoryIcon />:null}
+              {text==="personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
+              {text==="Work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
+              {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null}
+            </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
+        <ListItem button>
+          <ListItemIcon> <AddCircleIcon /> </ListItemIcon>
+          <ListItemText primary="Add your Category" />
+        </ListItem>
       </List>
     </div>
   );
@@ -159,8 +206,29 @@ function TodoDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {tasks.map((task,index)=>{
+          return <Typography paragraph>
+            <SimpleCard 
+              name={task.name}
+              category={task.category}
+              date={task.date}
+              description={task.description}
+              completeStatus={task.completeStatus}
+            />
+        </Typography>
+        })}
         <Typography paragraph>
-          TodoList is Here
+          <SimpleCard 
+            name="abc"
+            category="Home"
+            date="23-10-2020"
+            description="abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk
+            jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf
+            ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg
+            fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk
+            lvc pqrstu vwxyz"
+            completeStatus={true}
+          />
        </Typography>
      
       </main>
