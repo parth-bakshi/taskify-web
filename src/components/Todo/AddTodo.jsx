@@ -9,20 +9,22 @@ import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-
+import moment, { isMoment } from 'moment';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 
 
 export default function AddTodo({open,onClose}) {
   const [category,setCategory]= React.useState("category");
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-12-30T21:11:54'));
+  const [selectedDate, setSelectedDate] = React.useState(moment(Date()).format("YYYY-MM-DD"));
   const [priority,setPriority] = React.useState("");
   const [todoItem,setTodoItem] = React.useState("");
+  const [time,setTime] =React.useState('')
   const formData= {  
       "todoItem" :'',
         "priority" : "",
         "category":"",
-        "date":""
+        "date":"",
+        "time":''
     } 
   const [todoForm,setTodoForm] =React.useState({
      ...formData
@@ -40,7 +42,8 @@ export default function AddTodo({open,onClose}) {
 
   };
   const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
+    let date= moment(e.target.value).format("YYYY-MM-DD");
+    setSelectedDate(date);
 
   };
 
@@ -49,19 +52,25 @@ export default function AddTodo({open,onClose}) {
 
   }
 
+  const handleTimeChange =(e)=>{
+    setTime(e.target.value)
+  }
+
   const handleSubmit = ()=>{
       
     let data =  {
         todoItem :todoItem,
         priority : priority,
         category:category,
-        date:selectedDate
+        date:selectedDate,
+        time:setTime
     }
     
     setTodoForm({ 
      ...data
     });
-
+    
+    console.log(data)
     onClose();
   
   }
@@ -106,7 +115,7 @@ export default function AddTodo({open,onClose}) {
                 onChange={handleChange}
                 
                 >
-                <MenuItem value={"category"}>category</MenuItem>
+                <MenuItem value={"category"}>Select Category</MenuItem>
                 <MenuItem value={'private'}>private</MenuItem>
                 <MenuItem value={'work'}>work</MenuItem>
                 <MenuItem value={'shopping'}>shopping</MenuItem>
@@ -118,12 +127,35 @@ export default function AddTodo({open,onClose}) {
                 id="date"
                 label="Date"
                 type="date"
+                defaultValue={moment(Date()).format("YYYY-MM-DD")}
                 InputLabelProps={{
                     shrink: true,
                 }}
-                onChange={handleDateChange}
+                onChange={(e)=>{
+                  setTime(e.target.value)
+                }}
                 />
             </Grid>
+
+            <Grid item xs={12} sm={6}>
+            <TextField
+                id="time"
+                label="Time"
+                type="time"
+                defaultValue="07:30"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
+                onChange={handleTimeChange}
+
+              />
+            </Grid>
+
+
+
 
         </Grid>
         

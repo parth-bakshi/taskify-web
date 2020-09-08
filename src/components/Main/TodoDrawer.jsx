@@ -122,7 +122,7 @@ function TodoDrawer(props) {
   const [openCategory, setOpenCategory] = React.useState(Boolean);
 
 
-  const [categoryItem,setCategoryItem] = React.useState(["General"]);
+  // const [categoryItem,setCategoryItem] = React.useState(["General"]);
 
   const handleCategory =()=>{
     setOpenCategory(true)
@@ -136,8 +136,10 @@ function TodoDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
   const handleSubmitCategory =(category)=>{
-    setCategoryItem([...categoryItem,category])
-    localStorage.setItem('category',categoryItem)
+    // setCategoryItem([...categoryItem,category])
+    tempArrayCategory.push(category)
+    setcategories([...tempArrayCategory])
+    // localStorage.setItem('category',categories)
   }
 
   const drawer = (
@@ -152,10 +154,10 @@ function TodoDrawer(props) {
           </ListItem>
 
 
-          <ListItem button onClick={handleAddTodo}>
+          {/* <ListItem button onClick={handleAddTodo}>
             <ListItemIcon><AddCircleIcon /></ListItemIcon>
             <ListItemText primary={"Add Todo"} />
-          </ListItem>
+          </ListItem> */}
           <AddTodo open={openTodo} onClose={()=>{setOpenTodo(!openTodo)}} />
 
           <ListItem button>
@@ -180,24 +182,26 @@ function TodoDrawer(props) {
         {categories.map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
-              {text==="custom"?<CategoryIcon />:null}
+              {/* {(text !== "personal" && "Work"&&"Shopping" ) ) ?<CategoryIcon />:null}
               {text==="personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
               {text==="Work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
-              {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null}
+              {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null} */}
+            <CategoryIcon />
             </ListItemIcon>
+
             <ListItemText primary={text} />
           </ListItem>
         ))}
-        <ListItem input style={{backgroundColor:"rgb(30,32,34,0.8)"}}>
-          <ListItemIcon> <AddCircleIcon /> </ListItemIcon>
+        {/* <ListItem input style={{backgroundColor:"rgb(30,32,34,0.8)"}}> */}
+          {/* <ListItemIcon> <AddCircleIcon /> </ListItemIcon> */}
           {/* <ListItemText primary="Add your Category" /> */}
-          <input placeholder={"Add your own Category"} style={{border:"none",height:"30px",backgroundColor:"rgb(30,32,34,0.8)",color:"lightgray",":placeholder":{color:"lightgray"}}}/>
-        </ListItem>
+          {/* <input placeholder={"Add your own Category"} style={{border:"none",height:"30px",backgroundColor:"rgb(30,32,34,0.8)",color:"lightgray",":placeholder":{color:"lightgray"}}}/> */}
+        {/* </ListItem> */}
       </List>
 
-      <Drawer />
-
-      <ListItem button onClick={handleCategory}>
+      {/* <Drawer /> */}
+      <Divider />
+      <ListItem button onClick={handleCategory} style={{backgroundColor:"rgb(30,32,34,0.8)", color:"white"}}>
             <ListItemIcon><AddCircleIcon /></ListItemIcon>
             <ListItemText primary={"Add Category"} />
       </ListItem>
@@ -229,7 +233,6 @@ function TodoDrawer(props) {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             // container={container}
@@ -272,8 +275,9 @@ function TodoDrawer(props) {
             />
         </Typography>
         })}
+
         <Typography paragraph>
-          <SimpleCard 
+          {/* <SimpleCard 
             name="abc"
             category="Home"
             date="23-10-2020"
@@ -283,7 +287,7 @@ function TodoDrawer(props) {
             fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk
             lvc pqrstu vwxyz"
             completeStatus={true}
-          />
+          /> */}
        </Typography>
 
        <div button onClick={handleAddTodo} className="add-button">
