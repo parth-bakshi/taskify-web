@@ -6,3 +6,18 @@
     height:100%;
     width:20px;
 }
+.fade{
+    opacity: 0.1;
+}
+
+.checked{
+    opacity:0.1
+}
+
+#abc:checked{
+    opacity:0.1;
+}
+
+.check{
+    opacity:0.4
+}

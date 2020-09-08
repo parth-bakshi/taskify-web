@@ -6,15 +6,19 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import "./styles.css";
+import classNames from "classnames";
 
 const useStyles = makeStyles({
-  root: {
+  root:{
     minWidth: 275,
-    maxWidth:"100%",
+    maxWidth: "100%",
     borderRadius:"12px",
     backgroundColor:"rgb(30,32,34,0.8)",
     color:"lightgray",
-    transition:"0.5s"
+    transition:"0.5s",
+    "&:hover":{
+      opacity:"0.9"
+    }
   },
   bullet: {
     display: 'inline-block',
@@ -58,13 +62,14 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-//   const bull = <span className={classes.bullet}>•</span>;
-const [completeStatus,changeCompleteStatus] = React.useState(props.completeStatus);
-function toggleComplete(){
-    changeCompleteStatus(!completeStatus);
-}
+  //   const bull = <span className={classes.bullet}>•</span>;
+  const [completeStatus,changeCompleteStatus] = React.useState(props.completeStatus);
+  function toggleComplete(){
+      changeCompleteStatus(!completeStatus);
+  }
   return (
-    <Card className={classes.root} onClick={toggleComplete}>
+    <Card className={`${classes.root} ${completeStatus?"check":null}`}
+      onClick={toggleComplete}>
       <CardContent className={classes.flexcol}>
           <div className={classes.content}>
                 <div className={classes.align}> 

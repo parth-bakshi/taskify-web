@@ -144,9 +144,10 @@ function TodoDrawer(props) {
             <ListItemText primary={text} />
           </ListItem>
         ))}
-        <ListItem button>
+        <ListItem input>
           <ListItemIcon> <AddCircleIcon /> </ListItemIcon>
-          <ListItemText primary="Add your Category" />
+          {/* <ListItemText primary="Add your Category" /> */}
+          <input placeholder={"Add your own Category"} style={{border:"none",height:"30px"}}/>
         </ListItem>
       </List>
     </div>
