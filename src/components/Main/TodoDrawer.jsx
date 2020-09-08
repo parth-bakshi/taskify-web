@@ -21,12 +21,14 @@ import CategoryIcon from '@material-ui/icons/Category';
 
 import AddTodo from "../Todo/AddTodo";
 import SimpleCard from './card';
+import "./styles.css"
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    color:"lightgray",
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    backgroundColor:"rgb(30,32,34,0.8)"
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -54,10 +57,45 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    position:"relative"
+    // backgroundColor:"#212529"
   },
 }));
 
 const tempArrayTasks = [{
+                      name:"abc",
+                      category:"Home",
+                      date:"23-10-2020",
+                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+                      lvc pqrstu vwxyz",
+                      completeStatus:false
+                    },
+                    {
+                      name:"abc",
+                      category:"Home",
+                      date:"23-10-2020",
+                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+                      lvc pqrstu vwxyz",
+                      completeStatus:false
+                    },
+                    {
+                      name:"abc",
+                      category:"Home",
+                      date:"23-10-2020",
+                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+                      lvc pqrstu vwxyz",
+                      completeStatus:true
+                    },
+                    {
                       name:"abc",
                       category:"Home",
                       date:"23-10-2020",
@@ -92,19 +130,13 @@ function TodoDrawer(props) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={`${classes.toolbar} toolbar-left`} />
       {/* <Divider /> */}
-      <List>
+      <List className="toolbar-left">
           
           <ListItem>
             {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
             <ListItemText primary="User's Name" />
-          </ListItem>
-        
-
-         <ListItem button onClick={()=>{alert("My day")}}>
-            <ListItemIcon><WbSunnyIcon /> </ListItemIcon>
-            <ListItemText primary={"My Day"} />
           </ListItem>
 
 
@@ -132,7 +164,7 @@ function TodoDrawer(props) {
 
       </List>
       <Divider />
-      <List>
+      <List className="toolbar-left">
         {categories.map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
@@ -144,10 +176,10 @@ function TodoDrawer(props) {
             <ListItemText primary={text} />
           </ListItem>
         ))}
-        <ListItem input>
+        <ListItem input style={{backgroundColor:"rgb(30,32,34,0.8)"}}>
           <ListItemIcon> <AddCircleIcon /> </ListItemIcon>
           {/* <ListItemText primary="Add your Category" /> */}
-          <input placeholder={"Add your own Category"} style={{border:"none",height:"30px"}}/>
+          <input placeholder={"Add your own Category"} style={{border:"none",height:"30px",backgroundColor:"rgb(30,32,34,0.8)",color:"lightgray",":placeholder":{color:"lightgray"}}}/>
         </ListItem>
       </List>
     </div>
@@ -231,7 +263,10 @@ function TodoDrawer(props) {
             completeStatus={true}
           />
        </Typography>
-     
+
+       <div button onClick={handleAddTodo} className="add-button">
+          <ListItemIcon><AddCircleIcon style={{width:"100%",height:"100%"}}/></ListItemIcon>
+        </div>
       </main>
     </div>
   );
