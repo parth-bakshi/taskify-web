@@ -20,7 +20,7 @@ import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import CategoryIcon from '@material-ui/icons/Category';
 
 import AddTodo from "../Todo/AddTodo";
-
+import AddCategory from "../Category/AddCategory"
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -62,15 +62,26 @@ function TodoDrawer(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openTodo, setOpenTodo] = React.useState(Boolean);
+  const [openCategory, setOpenCategory] = React.useState(Boolean);
+
+
+  const [categoryItem,setCategoryItem] = React.useState(["General"]);
+
+  const handleCategory =()=>{
+    setOpenCategory(true)
+  }
 
   const handleAddTodo =()=>{
-    console.log("open tru")
     setOpenTodo(true);
    }
  
    const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleSubmitCategory =(category)=>{
+    setCategoryItem([...categoryItem,category])
+    localStorage.setItem('category',categoryItem)
+  }
 
   const drawer = (
     <div>
@@ -95,19 +106,29 @@ function TodoDrawer(props) {
       </List>
       <Divider />
       <List>
-        {["personal", "Work", "Home"].map((text, index) => (
-          <ListItem button key={text}>
+        {categoryItem.map((text, index) => (
+        <ListItem button key={text}>
             <ListItemIcon><CategoryIcon /></ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
+
+      <Drawer />
+
+      <ListItem button onClick={handleCategory}>
+            <ListItemIcon><AddCircleIcon /></ListItemIcon>
+            <ListItemText primary={"Add Category"} />
+      </ListItem>
+
+      <AddCategory handleSubmitCategory={handleSubmitCategory} open={openCategory} onClose={()=>{setOpenCategory(!openCategory)}} />
     </div>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+    
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
