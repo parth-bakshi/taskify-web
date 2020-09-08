@@ -1,0 +1,36 @@
+.blue{
+    color: lightblue;
+    padding:0px 10px;
+}
+.checkbox{
+    height:100%;
+    width:20px;
+}
+.fade{
+    opacity: 0.1;
+}
+
+.checked{
+    opacity:0.1
+}
+
+#abc:checked{
+    opacity:0.1;
+}
+
+.check{
+    opacity:0.4
+}
+
+.toolbar-left{
+    background-color: rgb(30,32,34,0.8);
+    color:lightgray;
+}
+
+.add-button{
+    position:fixed;
+    bottom:10px;
+    right:10px;
+    width:90px;
+    height:90px;
+}
