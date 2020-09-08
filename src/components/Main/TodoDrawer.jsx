@@ -23,6 +23,7 @@ import AddTodo from "../Todo/AddTodo";
 import SimpleCard from './card';
 import "./styles.css"
 
+import AddCategory from "../Category/AddCategory"
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -118,15 +119,26 @@ function TodoDrawer(props) {
   const [categories, setcategories] = React.useState(tempArrayCategory);
   const [tasks,setTasks] = React.useState(tempArrayTasks); 
   //need to fetch data for above 2 state in componentdidmount
+  const [openCategory, setOpenCategory] = React.useState(Boolean);
+
+
+  const [categoryItem,setCategoryItem] = React.useState(["General"]);
+
+  const handleCategory =()=>{
+    setOpenCategory(true)
+  }
 
   const handleAddTodo =()=>{
-    console.log("open tru")
     setOpenTodo(true);
    }
  
    const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleSubmitCategory =(category)=>{
+    setCategoryItem([...categoryItem,category])
+    localStorage.setItem('category',categoryItem)
+  }
 
   const drawer = (
     <div>
@@ -182,12 +194,22 @@ function TodoDrawer(props) {
           <input placeholder={"Add your own Category"} style={{border:"none",height:"30px",backgroundColor:"rgb(30,32,34,0.8)",color:"lightgray",":placeholder":{color:"lightgray"}}}/>
         </ListItem>
       </List>
+
+      <Drawer />
+
+      <ListItem button onClick={handleCategory}>
+            <ListItemIcon><AddCircleIcon /></ListItemIcon>
+            <ListItemText primary={"Add Category"} />
+      </ListItem>
+
+      <AddCategory handleSubmitCategory={handleSubmitCategory} open={openCategory} onClose={()=>{setOpenCategory(!openCategory)}} />
     </div>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+    
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>

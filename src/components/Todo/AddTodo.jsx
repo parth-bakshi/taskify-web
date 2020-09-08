@@ -15,7 +15,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers
 
 export default function AddTodo({open,onClose}) {
   const [category,setCategory]= React.useState("category");
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-12-30T21:11:54'));
   const [priority,setPriority] = React.useState("");
   const [todoItem,setTodoItem] = React.useState("");
   const formData= {  
@@ -31,25 +31,21 @@ export default function AddTodo({open,onClose}) {
 
   const handleTodoItem = (e) => {
     setTodoItem(e.target.value);  
-    // setTodoForm({todoItem:e.target.value})
 };
 
   
   const handlePriority = (e) => {
     setPriority(e.target.value);
-    // setTodoForm({priority:e.target.value})
 
 
   };
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
-    // setTodoForm({date:e.target.value})
 
   };
 
   const handleChange = (e)=>{
     setCategory(e.target.value)
-    // setTodoForm({category:e.target.value})
 
   }
 
