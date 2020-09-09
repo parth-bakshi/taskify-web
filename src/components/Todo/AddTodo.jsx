@@ -18,13 +18,15 @@ export default function AddTodo({open,onClose}) {
   const [selectedDate, setSelectedDate] = React.useState(moment(Date()).format("YYYY-MM-DD"));
   const [priority,setPriority] = React.useState("");
   const [todoItem,setTodoItem] = React.useState("");
-  const [time,setTime] =React.useState('')
+  const [time,setTime] =React.useState('');
+  const [description,setDescription]= React.useState('')
   const formData= {  
       "todoItem" :'',
         "priority" : "",
         "category":"",
         "date":"",
-        "time":''
+        "time":'',
+        "description":""
     } 
   const [todoForm,setTodoForm] =React.useState({
      ...formData
@@ -56,6 +58,10 @@ export default function AddTodo({open,onClose}) {
     setTime(e.target.value)
   }
 
+  const handleDescription =(e)=>{
+    setDescription(e.target.value)
+  }
+
   const handleSubmit = ()=>{
       
     let data =  {
@@ -63,7 +69,8 @@ export default function AddTodo({open,onClose}) {
         priority : priority,
         category:category,
         date:selectedDate,
-        time:setTime
+        time:time,
+        description:description
     }
     
     setTodoForm({ 
@@ -140,7 +147,7 @@ export default function AddTodo({open,onClose}) {
             <Grid item xs={12} sm={6}>
             <TextField
                 id="time"
-                label="Time"
+                label="Notify"
                 type="time"
                 defaultValue="07:30"
                 InputLabelProps={{
@@ -154,7 +161,18 @@ export default function AddTodo({open,onClose}) {
               />
             </Grid>
 
-
+            <Grid item xs={12} sm={6}>
+            <TextField
+                autoFocus
+                margin="dense"
+                name ="description"
+                label="Description"
+                type="text"
+                onChange={handleDescription}
+                fullWidth
+            />
+            </Grid>
+        
 
 
         </Grid>
