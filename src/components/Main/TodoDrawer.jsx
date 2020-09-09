@@ -18,6 +18,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import CategoryIcon from '@material-ui/icons/Category';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
+import AllInboxIcon from '@material-ui/icons/AllInbox';
 
 import AddTodo from "../Todo/AddTodo";
 import SimpleCard from './card';
@@ -29,7 +33,6 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    color:"lightgray",
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    backgroundColor:"rgb(30,32,34,0.8)"
+    backgroundColor: "rgb(30,32,34,0.8)"
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -58,56 +61,56 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    position:"relative"
+    position: "relative"
     // backgroundColor:"#212529"
   },
 }));
 
 const tempArrayTasks = [{
-                      name:"abc",
-                      category:"Home",
-                      date:"23-10-2020",
-                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+  name: "parth",
+  category: "Home",
+  date: "23-10-2020",
+  description: "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
                       lvc pqrstu vwxyz",
-                      completeStatus:false
-                    },
-                    {
-                      name:"abc",
-                      category:"Home",
-                      date:"23-10-2020",
-                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+  completeStatus: true
+},
+{
+  name: "prateek",
+  category: "Home",
+  date: "23-10-2020",
+  description: "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
                       lvc pqrstu vwxyz",
-                      completeStatus:false
-                    },
-                    {
-                      name:"abc",
-                      category:"Home",
-                      date:"23-10-2020",
-                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+  completeStatus: false
+},
+{
+  name: "swapnil",
+  category: "Home",
+  date: "23-10-2020",
+  description: "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
                       lvc pqrstu vwxyz",
-                      completeStatus:true
-                    },
-                    {
-                      name:"abc",
-                      category:"Home",
-                      date:"23-10-2020",
-                      description:"abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+  completeStatus: true
+},
+{
+  name: "unknown",
+  category: "Home",
+  date: "23-10-2020",
+  description: "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
                       lvc pqrstu vwxyz",
-                      completeStatus:false
-                    }
-                  ]
+  completeStatus: false
+}
+]
 const tempArrayCategory = ["personal", "Work", "Shopping", "custom"];
 
 function TodoDrawer(props) {
@@ -117,63 +120,88 @@ function TodoDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openTodo, setOpenTodo] = React.useState(Boolean);
   const [categories, setcategories] = React.useState(tempArrayCategory);
-  const [tasks,setTasks] = React.useState(tempArrayTasks); 
+  const [tasks, setTasks] = React.useState(tempArrayTasks);
   //need to fetch data for above 2 state in componentdidmount
   const [openCategory, setOpenCategory] = React.useState(Boolean);
 
 
-  // const [categoryItem,setCategoryItem] = React.useState(["General"]);
+  //states for showing data
+  const [showCompletedTask, setShowCompletedTask] = React.useState(false);
+  const [showInCompletedTask, setShowInCompletedTask] = React.useState(false);
+  const [showAllTask, setShowAllTask] = React.useState(true);
 
-  const handleCategory =()=>{
+
+  const handleCategory = () => {
     setOpenCategory(true)
   }
 
-  const handleAddTodo =()=>{
+  const handleAddTodo = () => {
     setOpenTodo(true);
-   }
- 
-   const handleDrawerToggle = () => {
+  }
+
+  const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const handleSubmitCategory =(category)=>{
+  const handleSubmitCategory = (category) => {
     // setCategoryItem([...categoryItem,category])
     tempArrayCategory.push(category)
     setcategories([...tempArrayCategory])
     // localStorage.setItem('category',categories)
   }
 
+  //Show Task Handlers
+  const handleShowAllTask = () => {
+    setShowAllTask(true)
+    setShowCompletedTask(false);
+    setShowInCompletedTask(false)
+  }
+
+  const handleShowCompletedTask = () => {
+    setShowCompletedTask(true);
+    setShowAllTask(false)
+    setShowInCompletedTask(false)
+  }
+  const handleShowInCompletedTask = () => {
+    setShowInCompletedTask(true)
+    setShowCompletedTask(false);
+    setShowAllTask(false)
+  }
+
+
+
+
   const drawer = (
     <div>
       <div className={`${classes.toolbar} toolbar-left`} />
       {/* <Divider /> */}
       <List className="toolbar-left">
-          
-          <ListItem>
-            {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
-            <ListItemText primary="User's Name" />
-          </ListItem>
+
+        <ListItem>
+          {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
+          <ListItemText primary="User's Name" />
+        </ListItem>
 
 
-          {/* <ListItem button onClick={handleAddTodo}>
+        {/* <ListItem button onClick={handleAddTodo}>
             <ListItemIcon><AddCircleIcon /></ListItemIcon>
             <ListItemText primary={"Add Todo"} />
           </ListItem> */}
-          <AddTodo open={openTodo} onClose={()=>{setOpenTodo(!openTodo)}} />
+        <AddTodo open={openTodo} onClose={() => { setOpenTodo(!openTodo) }} />
 
-          <ListItem button>
-            <ListItemIcon><AddCircleIcon /></ListItemIcon>
-            <ListItemText primary={"All"} />
-          </ListItem>
+        <ListItem button onClick={handleShowAllTask}>
+          <ListItemIcon><AllInboxIcon /></ListItemIcon>
+          <ListItemText primary={"All"} />
+        </ListItem>
 
-          <ListItem button>
-            <ListItemIcon><AddCircleIcon /></ListItemIcon>
-            <ListItemText primary={"Completed Tasks"} />
-          </ListItem>
+        <ListItem button onClick={handleShowCompletedTask}>
+          <ListItemIcon><SentimentVerySatisfiedIcon /></ListItemIcon>
+          <ListItemText primary={"Completed Tasks"} />
+        </ListItem>
 
-          <ListItem button>
-            <ListItemIcon><AddCircleIcon /></ListItemIcon>
-            <ListItemText primary={"Incomplete Tasks"} />
-          </ListItem>
+        <ListItem button onClick={handleShowInCompletedTask}>
+          <ListItemIcon><SentimentVeryDissatisfiedIcon /></ListItemIcon>
+          <ListItemText primary={"Incomplete Tasks"} />
+        </ListItem>
 
 
       </List>
@@ -186,34 +214,34 @@ function TodoDrawer(props) {
               {text==="personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
               {text==="Work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
               {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null} */}
-            <CategoryIcon />
+              <CategoryIcon />
             </ListItemIcon>
 
             <ListItemText primary={text} />
           </ListItem>
         ))}
         {/* <ListItem input style={{backgroundColor:"rgb(30,32,34,0.8)"}}> */}
-          {/* <ListItemIcon> <AddCircleIcon /> </ListItemIcon> */}
-          {/* <ListItemText primary="Add your Category" /> */}
-          {/* <input placeholder={"Add your own Category"} style={{border:"none",height:"30px",backgroundColor:"rgb(30,32,34,0.8)",color:"lightgray",":placeholder":{color:"lightgray"}}}/> */}
+        {/* <ListItemIcon> <AddCircleIcon /> </ListItemIcon> */}
+        {/* <ListItemText primary="Add your Category" /> */}
+        {/* <input placeholder={"Add your own Category"} style={{border:"none",height:"30px",backgroundColor:"rgb(30,32,34,0.8)",color:"lightgray",":placeholder":{color:"lightgray"}}}/> */}
         {/* </ListItem> */}
       </List>
 
       {/* <Drawer /> */}
       <Divider />
-      <ListItem button onClick={handleCategory} style={{backgroundColor:"rgb(30,32,34,0.8)", color:"white"}}>
-            <ListItemIcon><AddCircleIcon /></ListItemIcon>
-            <ListItemText primary={"Add Category"} />
+      <ListItem button onClick={handleCategory} style={{ backgroundColor: "rgb(30,32,34,0.8)", color: "white" }}>
+        <ListItemIcon><AddCircleIcon /></ListItemIcon>
+        <ListItemText primary={"Add Category"} />
       </ListItem>
 
-      <AddCategory handleSubmitCategory={handleSubmitCategory} open={openCategory} onClose={()=>{setOpenCategory(!openCategory)}} />
+      <AddCategory handleSubmitCategory={handleSubmitCategory} open={openCategory} onClose={() => { setOpenCategory(!openCategory) }} />
     </div>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    
+
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -228,7 +256,7 @@ function TodoDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            ToDo App 
+            ToDo App
           </Typography>
         </Toolbar>
       </AppBar>
@@ -264,34 +292,58 @@ function TodoDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {tasks.map((task,index)=>{
-          return <Typography paragraph>
-            <SimpleCard 
-              name={task.name}
-              category={task.category}
-              date={task.date}
-              description={task.description}
-              completeStatus={task.completeStatus}
-            />
-        </Typography>
-        })}
 
-          {/*   <Typography paragraph>
-      <SimpleCard 
-            name="abc"
-            category="Home"
-            date="23-10-2020"
-            description="abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk
-            jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf
-            ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg
-            fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk
-            lvc pqrstu vwxyz"
-            completeStatus={true}
-          /> 
-       </Typography>*/}
+        { //show all task 
+          showAllTask && tasks.map((task, index) => {
+            return <Typography paragraph>
+              <SimpleCard
+                name={task.name}
+                category={task.category}
+                date={task.date}
+                description={task.description}
+                completeStatus={task.completeStatus}
+              />
+            </Typography>
+          })}
 
-       <div button onClick={handleAddTodo} className="add-button">
-          <ListItemIcon><AddCircleIcon style={{width:"100%",height:"100%"}}/></ListItemIcon>
+
+        { //showing completed task 
+          showCompletedTask && tasks.filter(task => task.completeStatus).map((task, index) => {
+            return (
+              <Typography paragraph>
+                <SimpleCard
+                  name={task.name}
+                  category={task.category}
+                  date={task.date}
+                  description={task.description}
+                  completeStatus={task.completeStatus}
+                />
+              </Typography>
+            )
+          })
+        }
+
+
+
+        { //showing Incompleted task 
+          showInCompletedTask && tasks.filter(task => !task.completeStatus).map((task, index) => {
+            return (
+              <Typography paragraph>
+                <SimpleCard
+                  name={task.name}
+                  category={task.category}
+                  date={task.date}
+                  description={task.description}
+                  completeStatus={task.completeStatus}
+                />
+              </Typography>
+            )
+          })
+        }
+
+
+        <div button onClick={handleAddTodo} className="add-button">
+          <ListItemIcon><AddCircleIcon style={{ width: "100%", height: "100%", color: "#408CAA" }} /></ListItemIcon>
         </div>
       </main>
     </div>

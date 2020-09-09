@@ -23,8 +23,11 @@
 }
 
 .toolbar-left{
-    background-color: rgb(30,32,34,0.8);
-    color:lightgray;
+    /* background-color: rgb(30,32,34,0.8); */
+    background-color: #408CAA ;
+    /* color:lightgray; */
+    color:white;
+
 }
 
 .add-button{
