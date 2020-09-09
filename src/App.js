@@ -1,8 +1,12 @@
-import React from 'react';
+import React,{Fragment} from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
 import logo from './logo.svg';
 import './App.css';
 import TodoDrawer from "./components/Main/TodoDrawer"
 import Login from "./components/Login/Login"
+import Signup from "./components/Signup/Signup"
+import Landing from "./components/Landing/Landing"
 function App() {
   
   const [category,setCategory]= React.useState(['General'])
@@ -15,11 +19,19 @@ function App() {
   console.log("uu",category)
 
   return (
-    <div className="App">
-      {/* {category ?    <TodoDrawer /> : <h1>hello</h1>  } */}
-  
-    <Login />
-    </div>
+    <Router>
+        <Fragment>
+          <Route exact path="/" component={Landing}></Route>
+          <section className="container">
+            <Switch >
+              <Route exact path="/signup" component={Signup}></Route>
+              <Route exact path="/login" component={Login}></Route>
+              <Route exact path="/todo" component={TodoDrawer}></Route>
+            </Switch>
+          </section>
+
+        </Fragment>
+      </Router>
   );
 }
 

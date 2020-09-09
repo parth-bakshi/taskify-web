@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         color: "gray",
-        marginTop: '8%',
+        marginTop: '5%',
         marginLeft: "25%",
         width: "50%",
         justifyContent: "center"
@@ -26,13 +26,15 @@ const useStyles = makeStyles((theme) => ({
 })
 )
 
-function Login() {
+function Signup() {
     const classes = useStyles();
+    const [name, setName] = useState("");
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
 
     const handleSubmit = () => {
-        let data = { email, password }
+        let data = { name ,email, password }
         console.log("data", data)
     }
     return (
@@ -41,8 +43,23 @@ function Login() {
                 <Typography variant={"h3"} m={5}> Todo App </Typography>
             </Grid>
 
-            <Grid container spacing={3} m={5} className={classes.root}>
-                <Typography variant={"h4"} > Login</Typography>
+
+            <Grid container spacing={3}  className={classes.root}>
+
+                <Typography variant={"h4"} > Sign Up</Typography>
+                <Grid item xs={12} sm={12}>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="name"
+                        label="Name"
+                        type="text"
+                        onChange={(e) => {
+                            setName(e.target.value)
+                        }}
+                        fullWidth
+                    />
+                </Grid>
                 <Grid item xs={12} sm={12}>
                     <TextField
                         autoFocus
@@ -77,7 +94,7 @@ function Login() {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                     <Typography variant="contained" color="primary" onClick={handleSubmit}>
-                    New to User? <Link to="/signup"><span style={{color: "#408CAA "}}>Sign Up </span>  </Link>
+                    Already a User? <Link to="/login"><span style={{color: "#408CAA "}}>Login </span>  </Link>
 
                    </Typography>
                 </Grid>
@@ -88,4 +105,4 @@ function Login() {
 }
 
 
-export default Login;
+export default Signup;
