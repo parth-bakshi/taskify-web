@@ -276,8 +276,8 @@ function TodoDrawer(props) {
         </Typography>
         })}
 
-        <Typography paragraph>
-          {/* <SimpleCard 
+          {/*   <Typography paragraph>
+      <SimpleCard 
             name="abc"
             category="Home"
             date="23-10-2020"
@@ -287,8 +287,8 @@ function TodoDrawer(props) {
             fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk
             lvc pqrstu vwxyz"
             completeStatus={true}
-          /> */}
-       </Typography>
+          /> 
+       </Typography>*/}
 
        <div button onClick={handleAddTodo} className="add-button">
           <ListItemIcon><AddCircleIcon style={{width:"100%",height:"100%"}}/></ListItemIcon>
