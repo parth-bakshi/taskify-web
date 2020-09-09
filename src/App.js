@@ -1,37 +1,67 @@
-import React,{Fragment} from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React, { Fragment } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
-import logo from './logo.svg';
-import './App.css';
-import TodoDrawer from "./components/Main/TodoDrawer"
-import Login from "./components/Login/Login"
-import Signup from "./components/Signup/Signup"
-import Landing from "./components/Landing/Landing"
+import logo from "./logo.svg";
+import "./App.css";
+import TodoDrawer from "./components/Main/TodoDrawer";
+import Login from "./components/Login/Login";
+import Signup from "./components/Signup/Signup";
+import Landing from "./components/Landing/Landing";
+import Cookies from "js-cookie";
+
+function PrivateRoute({ component: Component, authed, path, ...rest }) {
+  console.log("authenprovate", authed);
+  return (
+    <Route
+      exact
+      render={(props) =>
+        authed === true ? (
+          <Component {...props} {...rest} />
+        ) : (
+          <Redirect to="/" />
+        )
+      }
+    />
+  );
+}
+
 function App() {
-  
-  const [category,setCategory]= React.useState(['General'])
-
-  React.useEffect(()=>{
-   if(!localStorage.getItem("category")==null) setCategory(localStorage.getItem('category'))
-   else localStorage.setItem('category', category)
-  },[])
-
-  console.log("uu",category)
+  const is_login = Cookies.get("is_login");
+  const [category, setCategory] = React.useState(["General"]);
+  console.log("is_login", !!is_login);
+  React.useEffect(() => {
+    if (!localStorage.getItem("category") == null)
+      setCategory(localStorage.getItem("category"));
+    else localStorage.setItem("category", category);
+  }, []);
 
   return (
     <Router>
-        <Fragment>
-          <Route exact path="/" component={Landing}></Route>
-          <section className="container">
-            <Switch >
-              <Route exact path="/signup" component={Signup}></Route>
-              <Route exact path="/login" component={Login}></Route>
-              <Route exact path="/todo" component={TodoDrawer}></Route>
-            </Switch>
-          </section>
-
-        </Fragment>
-      </Router>
+      <Fragment>
+        <Route exact path="/" component={Landing}></Route>
+        <section className="container">
+          <Switch>
+            <Route exact path="/signup" component={Signup}></Route>
+            <Route
+              exact
+              path="/login"
+              render={(props) => <Login {...props} />}
+            ></Route>
+            <PrivateRoute
+              exact
+              path="/todo"
+              authed={!!is_login}
+              component={TodoDrawer}
+            ></PrivateRoute>
+          </Switch>
+        </section>
+      </Fragment>
+    </Router>
   );
 }
 
