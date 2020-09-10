@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,Fragment } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -22,6 +22,8 @@ import DoneAllIcon from "@material-ui/icons/DoneAll";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
 import AddTodo from "../Todo/AddTodo";
@@ -67,6 +69,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     // backgroundColor:"#212529"
   },
+  loader:{
+    display:"flex",
+    marginTop:"20%",
+    justifyContent:"center",
+  }
 }));
 
 // const tempArrayTasks = [
@@ -134,6 +141,7 @@ function TodoDrawer(props) {
   const [categories, setcategories] = React.useState([]);
   const [allTasks, setAllTasks] = React.useState([]);
   //above state will contain all data everytime
+  const [loading, setLoading] = React.useState(true)
 
   const [tasks, setTasks] = React.useState([]);
   //above state will be responsible which tasks to display
@@ -153,7 +161,8 @@ function TodoDrawer(props) {
       })
       .then((res) => {
         setcategories(res.data.user.categories);
-    });
+        setLoading(false)
+      });
     //to fetch all tasks
     axios
       .get(apiURLs.getTasks(), {
@@ -164,8 +173,8 @@ function TodoDrawer(props) {
       .then((res) => {
         setTasks(res.data.data);
         setAllTasks(res.data.data);
-    });
-    }, []
+      });
+  }, []
   );
 
   const addTask = (task) => {
@@ -198,19 +207,19 @@ function TodoDrawer(props) {
     });
     //to create a category
     axios
-      .post(apiURLs.createCategory(),params, {
+      .post(apiURLs.createCategory(), params, {
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
           "content-type": "application/json",
         },
       })
       .then((res) => {
-        if(res.status==200){
+        if (res.status == 200) {
           setcategories([...tempArray]);
         }
         console.log(res);
-    });
-    
+      });
+
     // localStorage.setItem('category',categories)
   };
 
@@ -235,18 +244,18 @@ function TodoDrawer(props) {
     console.log(e.target.closest(".task-group").getAttribute("data-value"));
     let selectedElement = e.target.closest(".task-group").getAttribute("data-value");
 
-    if(selectedElement==="complete"){
+    if (selectedElement === "complete") {
       selectedElement = true;
     }
-    else if(selectedElement==="incomplete"){
+    else if (selectedElement === "incomplete") {
       selectedElement = false;
     }
     let tempArray = [...allTasks];
-    tempArray = tempArray.filter((task)=>{
-      if(selectedElement==="all"){
+    tempArray = tempArray.filter((task) => {
+      if (selectedElement === "all") {
         return true;
       }
-      return selectedElement===task.completeStatus;
+      return selectedElement === task.completeStatus;
     })
     setTasks(tempArray);
 
@@ -257,46 +266,46 @@ function TodoDrawer(props) {
     let selectedCategory = e.target.closest(".category-group").getAttribute("data-value");
 
     let tempArray = [...allTasks];
-    tempArray = tempArray.filter((task)=>{
-      return selectedCategory===task.category;
+    tempArray = tempArray.filter((task) => {
+      return selectedCategory === task.category;
     })
     setTasks(tempArray);
   };
 
-  const deleteTask = (id)=>{
+  const deleteTask = (id) => {
     let tempArray = [...tasks];
-    for( var i = 0; i < tempArray.length; i++){ 
-      if ( tempArray[i]._id === id) { 
-        tempArray.splice(i, 1); 
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray.splice(i, 1);
         break;
       }
     }
     setTasks(tempArray);
     tempArray = [...allTasks];
-    for( var i = 0; i < tempArray.length; i++){ 
-      if ( tempArray[i]._id === id) { 
-        tempArray.splice(i, 1); 
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray.splice(i, 1);
         break;
       }
     }
     setAllTasks(tempArray);
   }
 
-  const toggleTaskState = (id)=>{
+  const toggleTaskState = (id) => {
     let tempArray = [...tasks];
-    for( let i = 0; i < tempArray.length; i++){
-      if ( tempArray[i]._id === id) { 
-        tempArray[i] = {...tempArray[i]};
+    for (let i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray[i] = { ...tempArray[i] };
         tempArray[i].completeStatus = !tempArray[i].completeStatus;
         break;
       }
     }
-    
+
     setTasks(tempArray);
     tempArray = [...allTasks];
-    for( var i = 0; i < tempArray.length; i++){ 
-      if ( tempArray[i]._id === id) {
-        tempArray[i] = {...tempArray[i]};
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray[i] = { ...tempArray[i] };
         tempArray[i].completeStatus = !tempArray[i].completeStatus;
         break;
       }
@@ -335,7 +344,7 @@ function TodoDrawer(props) {
           <ListItemIcon>
             <SentimentVerySatisfiedIcon />
           </ListItemIcon>
-          <ListItemText primary={"Completed Tasks"} data-value="incomplete"/>
+          <ListItemText primary={"Completed Tasks"} data-value="incomplete" />
         </ListItem>
 
         <ListItem button onClick={handleTask} data-value="incomplete" className="task-group">
@@ -350,10 +359,10 @@ function TodoDrawer(props) {
         {categories.map((text, index) => (
           <ListItem button key={text} onClick={handleCategoryTasks} data-value={text} className="category-group">
             <ListItemIcon>
-              {(text !== "Personal" && text !=="Work" && text !=="Shopping" ) ?<CategoryIcon />:null}
-              {text==="Personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
-              {text==="Work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
-              {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null}
+              {(text !== "Personal" && text !== "Work" && text !== "Shopping") ? <CategoryIcon /> : null}
+              {text === "Personal" ? <i class="fa fa-user fa-lg" aria-hidden="true"></i> : null}
+              {text === "Work" ? <i class="fa fa-briefcase fa-lg" aria-hidden="true"></i> : null}
+              {text === "Shopping" ? <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i> : null}
               {/* <CategoryIcon /> */}
             </ListItemIcon>
             <ListItemText primary={text} />
@@ -393,59 +402,64 @@ function TodoDrawer(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            ToDo App
+    <Fragment>
+      {loading ?
+       (<div  className={classes.loader}> <CircularProgress />
+        <Typography variant={"subtitle2"} style={{margin:"1%", color:"#0a6fb6"}}>Welcome to Todo App </Typography>
+       </div>) :
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                className={classes.menuButton}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap>
+                ToDo App
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden smUp implementation="css">
-          <Drawer
-            // container={container}
-            variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
+            </Toolbar>
+          </AppBar>
+          <nav className={classes.drawer} aria-label="mailbox folders">
+            <Hidden smUp implementation="css">
+              <Drawer
+                // container={container}
+                variant="temporary"
+                anchor={theme.direction === "rtl" ? "right" : "left"}
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
+              >
+                {drawer}
+              </Drawer>
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Drawer
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                variant="permanent"
+                open
+              >
+                {drawer}
+              </Drawer>
+            </Hidden>
+          </nav>
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
 
-          {
-            //show tasks
+            {
+              //show tasks
               tasks.map((task, index) => {
                 return (
                   <Typography paragraph key={task._id}>
@@ -462,17 +476,20 @@ function TodoDrawer(props) {
                   </Typography>
                 );
               })
-          }
+            }
 
-        <div button onClick={handleAddTodo} className="add-button">
-          <ListItemIcon>
-            <AddCircleIcon
-              style={{ width: "100%", height: "100%", color: "#408CAA" }}
-            />
-          </ListItemIcon>
+            <div button onClick={handleAddTodo} className="add-button">
+              <ListItemIcon>
+                <AddCircleIcon
+                  style={{ width: "100%", height: "100%", color: "#408CAA" }}
+                />
+              </ListItemIcon>
+            </div>
+          </main>
+
         </div>
-      </main>
-    </div>
+      }
+    </Fragment>
   );
 }
 
