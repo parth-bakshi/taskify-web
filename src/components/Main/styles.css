@@ -37,3 +37,9 @@
     width:90px;
     height:90px;
 }
+.delete-button{
+    height:30px;
+    width:70px;
+    border:none;
+    box-shadow: 0px 0px 5px 1px darkgrey;
+}

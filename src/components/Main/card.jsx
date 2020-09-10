@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import "./styles.css";
 import classNames from "classnames";
+import axios from "axios";
+import { apiURLs } from "../../api_services/urls";
+import Cookies from "js-cookie";
 
 const useStyles = makeStyles({
   root:{
@@ -47,16 +50,23 @@ const useStyles = makeStyles({
       width:"90%",
       wordBreak:"break-all"
   },
+  descriptionTop:{
+    display:"flex",
+    justifyContent:"space-between",
+    width:"90%",
+  },
   align:{
-      display:"flex",
-      alignItems:"center",
-      fontSize:"18px",
-      "&:hover":{
-          color:"lightblue",
-          cursor:"pointer",
-          transition:"0.5s",
-      },
-
+    display:"flex",
+    alignItems:"center",
+    fontSize:"18px",
+    "&:hover":{
+        color:"lightblue",
+        cursor:"pointer",
+        transition:"0.5s",
+    },
+  },
+  deleteButton:{
+    width:"10%",
   }
 });
 
@@ -64,8 +74,46 @@ export default function SimpleCard(props) {
   const classes = useStyles();
   //   const bull = <span className={classes.bullet}>•</span>;
   const [completeStatus,changeCompleteStatus] = React.useState(props.completeStatus);
+
   function toggleComplete(){
       changeCompleteStatus(!completeStatus);
+      const params = JSON.stringify({
+        "id": props.id,
+      });
+      axios
+        .post(apiURLs.toggleTask(),params, {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "content-type": "application/json",
+          },
+        })
+        .then((res) => {
+          if(res.status!=200){
+            changeCompleteStatus(!completeStatus);
+          }
+          // console.log(res);
+      });
+
+      //api call for toggle status
+  }
+
+  function deleteTask(){
+    const params = JSON.stringify({
+      "id": props.id,
+    });
+    axios
+      .post(apiURLs.deleteTask(),params, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) => {
+        if(res.status==200){
+          props.deleteTask(props.id);
+        }
+        // console.log(res);
+    });
   }
   return (
     <Card className={`${classes.root} ${completeStatus?"check":null}`}
@@ -80,8 +128,9 @@ export default function SimpleCard(props) {
                 <div> {props.date} </div>
                 <div><input type="checkbox" className="checkbox" checked={completeStatus}/></div>
           </div>
-          <div className={classes.description}>
-              {props.description}
+          <div className={classes.descriptionTop}>
+              <div className={classes.description}> {props.description} </div>
+              <div className={classes.deleteButton}><button className="delete-button" onClick={deleteTask}>Delete</button></div>
           </div>
       </CardContent>
       {/* <CardActions>

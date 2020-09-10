@@ -72,7 +72,8 @@ const useStyles = makeStyles((theme) => ({
 const tempArrayTasks = [
   {
     name: "parth",
-    category: "Home",
+    _id:"1",
+    category: "work",
     date: "23-10-2020",
     description:
       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
@@ -84,7 +85,8 @@ const tempArrayTasks = [
   },
   {
     name: "prateek",
-    category: "Home",
+    _id:"2",
+    category: "work",
     date: "23-10-2020",
     description:
       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
@@ -96,7 +98,8 @@ const tempArrayTasks = [
   },
   {
     name: "swapnil",
-    category: "Home",
+    _id:"3",
+    category: "shopping",
     date: "23-10-2020",
     description:
       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
@@ -108,7 +111,8 @@ const tempArrayTasks = [
   },
   {
     name: "unknown",
-    category: "Home",
+    _id:"4",
+    category: "personal",
     date: "23-10-2020",
     description:
       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
@@ -128,16 +132,23 @@ function TodoDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openTodo, setOpenTodo] = React.useState(Boolean);
   const [categories, setcategories] = React.useState(tempArrayCategory);
+  const [allTasks, setAllTasks] = React.useState(tempArrayTasks);
+  //above state will contain all data everytime
+
   const [tasks, setTasks] = React.useState(tempArrayTasks);
-  //need to fetch data for above 2 state in componentdidmount
+  //above state will be responsible which tasks to display
+
+  //fill  {tasks} and {alltasks} both in componentdidmount for the first time
+
   const [openCategory, setOpenCategory] = React.useState(Boolean);
 
   //states for showing data
-  const [showCompletedTask, setShowCompletedTask] = React.useState(false);
-  const [showInCompletedTask, setShowInCompletedTask] = React.useState(false);
-  const [showAllTask, setShowAllTask] = React.useState(true);
+  // const [showCompletedTask, setShowCompletedTask] = React.useState(false);
+  // const [showInCompletedTask, setShowInCompletedTask] = React.useState(false);
+  // const [showAllTask, setShowAllTask] = React.useState(true);
 
   useEffect(() => {
+    //to fetch categories
     axios
       .get(apiURLs.getUser(), {
         headers: {
@@ -146,8 +157,22 @@ function TodoDrawer(props) {
       })
       .then((res) => {
         setcategories(res.data.user.categories);
-      });
-  }, []);
+    });
+    //to fetch all tasks
+    axios
+      .get(apiURLs.getTasks(), {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      })
+      .then((res) => {
+        setTasks(res.data.data);
+        setAllTasks(res.data.data);
+    });
+    }, []
+  );
+
+  
 
   const handleCategory = () => {
     setOpenCategory(true);
@@ -162,28 +187,79 @@ function TodoDrawer(props) {
   };
   const handleSubmitCategory = (category) => {
     // setCategoryItem([...categoryItem,category])
-    tempArrayCategory.push(category);
-    setcategories([...tempArrayCategory]);
+    let tempArray = [...categories];
+    tempArray.push(category);
+    setcategories([...tempArray]);
     // localStorage.setItem('category',categories)
   };
 
-  //Show Task Handlers
-  const handleShowAllTask = () => {
-    setShowAllTask(true);
-    setShowCompletedTask(false);
-    setShowInCompletedTask(false);
+  // //Show Task Handlers
+  // const handleShowAllTask = () => {
+  //   setShowAllTask(true);
+  //   setShowCompletedTask(false);
+  //   setShowInCompletedTask(false);
+  // };
+
+  // const handleShowCompletedTask = () => {
+  //   setShowCompletedTask(true);
+  //   setShowAllTask(false);
+  //   setShowInCompletedTask(false);
+  // };
+  // const handleShowInCompletedTask = () => {
+  //   setShowInCompletedTask(true);
+  //   setShowCompletedTask(false);
+  //   setShowAllTask(false);
+  // };
+  const handleTask = (e) => {
+    console.log(e.target.closest(".task-group").getAttribute("data-value"));
+    let selectedElement = e.target.closest(".task-group").getAttribute("data-value");
+
+    if(selectedElement==="complete"){
+      selectedElement = true;
+    }
+    else if(selectedElement==="incomplete"){
+      selectedElement = false;
+    }
+    let tempArray = [...allTasks];
+    tempArray = tempArray.filter((task)=>{
+      if(selectedElement==="all"){
+        return true;
+      }
+      return selectedElement===task.completeStatus;
+    })
+    setTasks(tempArray);
+
   };
 
-  const handleShowCompletedTask = () => {
-    setShowCompletedTask(true);
-    setShowAllTask(false);
-    setShowInCompletedTask(false);
+  const handleCategoryTasks = (e) => {
+    console.log(e.target.closest(".category-group").getAttribute("data-value"));
+    let selectedCategory = e.target.closest(".category-group").getAttribute("data-value");
+
+    let tempArray = [...allTasks];
+    tempArray = tempArray.filter((task)=>{
+      return selectedCategory===task.category;
+    })
+    setTasks(tempArray);
   };
-  const handleShowInCompletedTask = () => {
-    setShowInCompletedTask(true);
-    setShowCompletedTask(false);
-    setShowAllTask(false);
-  };
+
+  const deleteTask = (id)=>{
+    let tempArray = [...tasks];
+    for( var i = 0; i < tempArray.length; i++){ 
+      if ( tempArray[i]._id === id) { 
+        tempArray.splice(i, 1); 
+        break;
+      }
+    }
+    setTasks(tempArray);
+    tempArray = [...allTasks];
+    for( var i = 0; i < tempArray.length; i++){ 
+      if ( tempArray[i]._id === id) { 
+        tempArray.splice(i, 1); 
+        break;
+      }
+    }
+    setAllTasks(tempArray);
+  }
 
   const drawer = (
     <div>
@@ -206,21 +282,21 @@ function TodoDrawer(props) {
           }}
         />
 
-        <ListItem button onClick={handleShowAllTask}>
+        <ListItem button onClick={handleTask} data-value="all" className="task-group">
           <ListItemIcon>
             <AllInboxIcon />
           </ListItemIcon>
           <ListItemText primary={"All"} />
         </ListItem>
 
-        <ListItem button onClick={handleShowCompletedTask}>
+        <ListItem button onClick={handleTask} data-value="complete" className="task-group">
           <ListItemIcon>
             <SentimentVerySatisfiedIcon />
           </ListItemIcon>
-          <ListItemText primary={"Completed Tasks"} />
+          <ListItemText primary={"Completed Tasks"} data-value="incomplete"/>
         </ListItem>
 
-        <ListItem button onClick={handleShowInCompletedTask}>
+        <ListItem button onClick={handleTask} data-value="incomplete" className="task-group">
           <ListItemIcon>
             <SentimentVeryDissatisfiedIcon />
           </ListItemIcon>
@@ -230,13 +306,13 @@ function TodoDrawer(props) {
       <Divider />
       <List className="toolbar-left">
         {categories.map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick={handleCategoryTasks} data-value={text} className="category-group">
             <ListItemIcon>
-              {/* {(text !== "personal" && "Work"&&"Shopping" ) ) ?<CategoryIcon />:null}
+              {(text !== "personal" && text !=="work" && text !=="shopping" ) ?<CategoryIcon />:null}
               {text==="personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
-              {text==="Work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
-              {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null} */}
-              <CategoryIcon />
+              {text==="work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
+              {text==="shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null}
+              {/* <CategoryIcon /> */}
             </ListItemIcon>
 
             <ListItemText primary={text} />
@@ -327,63 +403,24 @@ function TodoDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-        {
-          //show all task
-          showAllTask &&
-            tasks.map((task, index) => {
-              return (
-                <Typography paragraph>
-                  <SimpleCard
-                    name={task.name}
-                    category={task.category}
-                    date={task.date}
-                    description={task.description}
-                    completeStatus={task.completeStatus}
-                  />
-                </Typography>
-              );
-            })
-        }
-
-        {
-          //showing completed task
-          showCompletedTask &&
-            tasks
-              .filter((task) => task.completeStatus)
-              .map((task, index) => {
+          {
+            //show tasks
+              tasks.map((task, index) => {
                 return (
-                  <Typography paragraph>
+                  <Typography paragraph key={task._id}>
                     <SimpleCard
+                      id={task._id}
                       name={task.name}
                       category={task.category}
                       date={task.date}
                       description={task.description}
                       completeStatus={task.completeStatus}
+                      deleteTask={deleteTask}
                     />
                   </Typography>
                 );
               })
-        }
-
-        {
-          //showing Incompleted task
-          showInCompletedTask &&
-            tasks
-              .filter((task) => !task.completeStatus)
-              .map((task, index) => {
-                return (
-                  <Typography paragraph>
-                    <SimpleCard
-                      name={task.name}
-                      category={task.category}
-                      date={task.date}
-                      description={task.description}
-                      completeStatus={task.completeStatus}
-                    />
-                  </Typography>
-                );
-              })
-        }
+          }
 
         <div button onClick={handleAddTodo} className="add-button">
           <ListItemIcon>
