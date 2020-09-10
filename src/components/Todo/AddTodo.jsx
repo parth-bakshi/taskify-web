@@ -108,7 +108,7 @@ export default function AddTodo({open,onClose,addTask,categories}) {
 
         <DialogContent>
             <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={8}>
             <TextField
                 autoFocus
                 margin="dense"
@@ -119,7 +119,7 @@ export default function AddTodo({open,onClose,addTask,categories}) {
                 fullWidth
             />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
             <TextField
                 autoFocus
                 margin="dense"
@@ -130,6 +130,22 @@ export default function AddTodo({open,onClose,addTask,categories}) {
 
                 fullWidth
             />
+            </Grid> */}
+             <Grid item xs={12} sm={4}>
+            <TextField
+                id="time"
+                label="Notify"
+                type="time"
+                defaultValue="07:30"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                inputProps={{
+                  step: 300, // 5 min
+                }}
+                onChange={handleTimeChange}
+
+              />
             </Grid>
         
             <Grid item xs={12} sm={6}>
@@ -142,7 +158,7 @@ export default function AddTodo({open,onClose,addTask,categories}) {
                   onChange={handleChange}
                   
                 >
-                  
+                  <MenuItem value={"category"}>Select Category</MenuItem>
                   {categories.map(function(currValue){
                     return <MenuItem value={currValue}> {currValue} </MenuItem>
                   })}
@@ -168,24 +184,9 @@ export default function AddTodo({open,onClose,addTask,categories}) {
                 />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-            <TextField
-                id="time"
-                label="Notify"
-                type="time"
-                defaultValue="07:30"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                inputProps={{
-                  step: 300, // 5 min
-                }}
-                onChange={handleTimeChange}
+           
 
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
             <TextField
                 autoFocus
                 margin="dense"

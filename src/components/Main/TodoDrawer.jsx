@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -22,6 +22,10 @@ import DoneAllIcon from "@material-ui/icons/DoneAll";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import moment from "moment-timezone";
+import momentMain from "moment";
+
 import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
 import AddTodo from "../Todo/AddTodo";
@@ -66,6 +70,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     position: "relative",
     // backgroundColor:"#212529"
+  },
+  loader: {
+    display: "flex",
+    marginTop: "20%",
+    justifyContent: "center",
   },
 }));
 
@@ -135,6 +144,7 @@ function TodoDrawer(props) {
   const [allTasks, setAllTasks] = React.useState([]);
   const [userName, setUsername] = React.useState("");
   //above state will contain all data everytime
+  const [loading, setLoading] = React.useState(true);
 
   const [tasks, setTasks] = React.useState([]);
   //above state will be responsible which tasks to display
@@ -154,6 +164,7 @@ function TodoDrawer(props) {
       .then((res) => {
         setUsername(res.data.user.name);
         setcategories(res.data.user.categories);
+        setLoading(false);
       });
     //to fetch all tasks
     axios
@@ -376,13 +387,13 @@ function TodoDrawer(props) {
                 <CategoryIcon />
               ) : null}
               {text === "Personal" ? (
-                <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+                <i className="fa fa-user fa-lg" aria-hidden="true"></i>
               ) : null}
               {text === "Work" ? (
-                <i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+                <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
               ) : null}
               {text === "Shopping" ? (
-                <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                <i className="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
               ) : null}
               {/* <CategoryIcon /> */}
             </ListItemIcon>
@@ -423,86 +434,102 @@ function TodoDrawer(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
+    <Fragment>
+      {loading ? (
+        <div className={classes.loader}>
+          {" "}
+          <CircularProgress />
+          <Typography
+            variant={"subtitle2"}
+            style={{ margin: "1%", color: "#0a6fb6" }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            ToDo App
+            Welcome to Todo App{" "}
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden smUp implementation="css">
-          <Drawer
-            // container={container}
-            variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            variant="permanent"
-            open
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-      </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-
-        {
-          //show tasks
-          tasks.map((task, index) => {
-            return (
-              <Typography paragraph key={task._id}>
-                <SimpleCard
-                  id={task._id}
-                  name={task.name}
-                  category={task.category}
-                  date={task.date}
-                  description={task.description}
-                  completeStatus={task.completeStatus}
-                  deleteTask={deleteTask}
-                  toggleTaskState={toggleTaskState}
-                />
-              </Typography>
-            );
-          })
-        }
-
-        <div button onClick={handleAddTodo} className="add-button">
-          <ListItemIcon>
-            <AddCircleIcon
-              style={{ width: "100%", height: "100%", color: "#408CAA" }}
-            />
-          </ListItemIcon>
         </div>
-      </main>
-    </div>
+      ) : (
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                className={classes.menuButton}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap>
+                ToDo App
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <nav className={classes.drawer} aria-label="mailbox folders">
+            <Hidden smUp implementation="css">
+              <Drawer
+                // container={container}
+                variant="temporary"
+                anchor={theme.direction === "rtl" ? "right" : "left"}
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
+              >
+                {drawer}
+              </Drawer>
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Drawer
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                variant="permanent"
+                open
+              >
+                {drawer}
+              </Drawer>
+            </Hidden>
+          </nav>
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+
+            {
+              //show tasks
+              tasks.map((task, index) => {
+                return (
+                  <Typography paragraph key={task._id}>
+                    <SimpleCard
+                      id={task._id}
+                      name={task.name}
+                      category={task.category}
+                      // date={task.date}
+                      date={task.date}
+                      description={task.description}
+                      completeStatus={task.completeStatus}
+                      deleteTask={deleteTask}
+                      toggleTaskState={toggleTaskState}
+                    />
+                  </Typography>
+                );
+              })
+            }
+
+            <div button onClick={handleAddTodo} className="add-button">
+              <ListItemIcon>
+                <AddCircleIcon
+                  style={{ width: "100%", height: "100%", color: "#408CAA" }}
+                />
+              </ListItemIcon>
+            </div>
+          </main>
+        </div>
+      )}
+    </Fragment>
   );
 }
 
