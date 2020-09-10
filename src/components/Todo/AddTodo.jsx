@@ -10,10 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import moment, { isMoment } from "moment";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+
 import axios from "axios";
 import { apiURLs } from "../../api_services/urls";
 import Cookies from "js-cookie";
@@ -21,12 +18,8 @@ import { useSnackbar } from 'notistack';
 
 export default function AddTodo({ open, onClose, addTask, categories }) {
   const [category, setCategory] = React.useState("category");
-  // const [selectedDate, setSelectedDate] = React.useState(moment(Date()).format("YYYY-MM-DD"));
-  const [priority, setPriority] = React.useState("");
   const [todoItem, setTodoItem] = React.useState("");
-  const [dateTime, setDateTime] = React.useState(
-    moment(Date()).format("YYYY-MM-DD")
-  );
+  const [dateTime, setDateTime] = React.useState();
   const [description, setDescription] = React.useState("");
   const formData = {
     name: "",
@@ -45,24 +38,13 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
     setTodoItem(e.target.value);
   };
 
-  const handlePriority = (e) => {
-    setPriority(e.target.value);
-  };
-  // const handleDateChange = (e) => {
-  //   let date = moment(e.target.value).format("YYYY-MM-DD");
-  //   setSelectedDate(date);
-
-  // };
-
   const handleChange = (e) => {
     setCategory(e.target.value);
   };
 
   const handleTimeChange = (e) => {
-    // console.log(moment(e.target.value).format("YYYY-MM-DD hh:mm:ss A Z"));
     setDateTime(moment(e.target.value).format("DD-MM-YYYY HH:mm"));
-    // console.log(e.target.value)
-    // setDateTime(e.target.value)
+
   };
 
   const handleDescription = (e) => {
@@ -70,6 +52,11 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
   };
 
   const handleSubmit = () => {
+    if (!todoItem) return enqueueSnackbar("Please Add Todo Item Name", { variant: "info" });
+    if (!dateTime) return enqueueSnackbar("Please Select Date and Time to Notify", { variant: "info" });
+    if (category === "category") return enqueueSnackbar("Please Select Category", { variant: "info" });
+    if (!description) return enqueueSnackbar("Please Add Todo Item Description", { variant: "info" });
+
     let data = {
       name: todoItem,
       category: category,
@@ -94,13 +81,13 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
         if (res.status == 200) {
           console.log("balle");
           addTask(res.data.data);
-          enqueueSnackbar("Todo Added Successfully",{variant:"success"});
+          enqueueSnackbar("Todo Added Successfully", { variant: "success" });
 
         }
         console.log(res);
         // console.log(res);
-      }).catch((e)=>{
-        enqueueSnackbar("Failed to Add Todo",{variant:"error"});
+      }).catch((e) => {
+        enqueueSnackbar("Failed to Add Todo", { variant: "error" });
 
       })
 
@@ -116,7 +103,7 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
         maxWidth="sm"
         aria-labelledby="add-todo-title"
       >
-        <DialogTitle id="add-todo-title">Add Todo</DialogTitle>
+        <DialogTitle id="add-todo-title">Add Your Todo</DialogTitle>
 
         <DialogContent>
           <Grid container spacing={3}>
@@ -125,30 +112,20 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 autoFocus
                 margin="dense"
                 name="todoField"
-                label="Todo Item"
+                label="Todo Item Name"
                 type="text"
                 onChange={handleTodoItem}
                 fullWidth
               />
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
-            <TextField
-                autoFocus
-                margin="dense"
-                name ="priority"
-                label="Priority"
-                type="text"
-                onChange={handlePriority}
 
-                fullWidth
-            />
-            </Grid> */}
             <Grid item xs={12} sm={6}>
               <TextField
                 id="time"
-                label="Notify"
+                label="Notify Me"
                 type="datetime-local"
-                // defaultValue={moment(Date()).format("YYYY-MM-DD-T-00:00")}
+                defaultValue={ moment(Date()).format("YYYY-MM-DDTHH:MM")}
+                startDate={moment(Date()).format("YYYY-MM-DD")}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -172,27 +149,10 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 {categories.map(function (currValue) {
                   return <MenuItem value={currValue}> {currValue} </MenuItem>;
                 })}
-                {/* <MenuItem value={"category"}>Select Category</MenuItem>
-                  <MenuItem value={'private'}>private</MenuItem>
-                  <MenuItem value={'work'}>work</MenuItem>
-                  <MenuItem value={'shopping'}>shopping</MenuItem> */}
+
               </Select>
             </Grid>
 
-            {/* <Grid item xs={12} sm={6}>
-                <TextField
-                id="date"
-                label="Date"
-                type="date"
-                defaultValue={moment(Date()).format("YYYY-MM-DD")}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                onChange={(e)=>{
-                  setTime(e.target.value)
-                }}
-                />
-            </Grid> */}
 
             <Grid item xs={12} sm={12}>
               <TextField
@@ -209,8 +169,8 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleSubmit} color="primary">
-            Add
+          <Button onClick={handleSubmit} variant={"contained"} color="primary">
+            Add Todo
           </Button>
         </DialogActions>
       </Dialog>
