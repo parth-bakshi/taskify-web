@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
-import Snackbar from "@material-ui/core/Snackbar";
+import { Link, Redirect } from "react-router-dom";
 import { apiURLs } from "../../api_services/urls";
 import Cookies from "js-cookie";
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login(props) {
-  console.log("props", props);
+  // console.log("props", props);
+  const { enqueueSnackbar } = useSnackbar();
+
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,16 +54,22 @@ function Login(props) {
   const handleSubmit = async () => {
     try {
       let data = { email, password };
+      if(!data.email) return enqueueSnackbar("Email is required",{variant:"warning"});
+      if(!data.password) return enqueueSnackbar("Password is required",{variant:"warning"});
+      if(data.password.length< 8) return enqueueSnackbar("Password should contain 8 characters",{variant:"warning"});
+     
       console.log("data", data);
       const response = await axios.post(apiURLs.login(), data);
 
       if (response.status === 200) {
         Cookies.set("token", response.data.token);
         Cookies.set("is_login", 1);
+        enqueueSnackbar("Login Successful ",{variant:"success"});
         return (window.location.href = "/todo");
       } else {
       }
     } catch (e) {
+      enqueueSnackbar("Login Failed Wrong User Credentials",{variant:"error"});
       console.log(e);
     }
   };
@@ -117,11 +125,11 @@ function Login(props) {
           <Typography
             variant="contained"
             color="primary"
-            onClick={handleSubmit}
+          
           >
             New to User?{" "}
-            <Link to="/signup">
-              <span style={{ color: "#408CAA " }}>Sign Up </span>{" "}
+            <Link to="/signup" style={{ color: "#408CAA ",textDecoration:"none" }}>
+              <span ><strong> Sign Up</strong> </span>{" "}
             </Link>
           </Typography>
         </Grid>
