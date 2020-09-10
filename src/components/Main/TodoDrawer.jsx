@@ -44,6 +44,7 @@ import AddTodo from "../Todo/AddTodo";
 import axios from "axios";
 import SimpleCard from "./card";
 import "./styles.css";
+import { useSnackbar } from 'notistack';
 
 import AddCategory from "../Category/AddCategory";
 const drawerWidth = 240;
@@ -91,61 +92,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const tempArrayTasks = [
-//   {
-//     name: "parth",
-//     _id:"1",
-//     category: "work",
-//     date: "23-10-2020",
-//     description:
-//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-//                       lvc pqrstu vwxyz",
-//     completeStatus: true,
-//   },
-//   {
-//     name: "prateek",
-//     _id:"2",
-//     category: "work",
-//     date: "23-10-2020",
-//     description:
-//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-//                       lvc pqrstu vwxyz",
-//     completeStatus: false,
-//   },
-//   {
-//     name: "swapnil",
-//     _id:"3",
-//     category: "shopping",
-//     date: "23-10-2020",
-//     description:
-//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-//                       lvc pqrstu vwxyz",
-//     completeStatus: true,
-//   },
-//   {
-//     name: "unknown",
-//     _id:"4",
-//     category: "personal",
-//     date: "23-10-2020",
-//     description:
-//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-//                       lvc pqrstu vwxyz",
-//     completeStatus: false,
-//   },
-// ];
-// const tempArrayCategory = [];
 
 function TodoDrawer(props) {
   // const { window } = props;
@@ -163,6 +109,7 @@ function TodoDrawer(props) {
   //above state will be responsible which tasks to display
 
   //fill  {tasks} and {alltasks} both in componentdidmount for the first time
+  const { enqueueSnackbar } = useSnackbar();
 
   const [openCategory, setOpenCategory] = React.useState(Boolean);
 
@@ -238,9 +185,13 @@ function TodoDrawer(props) {
       .then((res) => {
         if (res.status == 200) {
           setcategories([...tempArray]);
+          enqueueSnackbar("Category Added Successfully",{variant:"success"});
         }
-        console.log(res);
-      });
+        // console.log(res);
+      }).catch((e)=>{
+        enqueueSnackbar("Failed to Add, Please Change the Category Name",{variant:"error"})
+
+      })
 
     // localStorage.setItem('category',categories)
   };
@@ -340,16 +291,16 @@ function TodoDrawer(props) {
   const drawer = (
     <div>
       <div className={`${classes.toolbar} toolbar-left`} />
-      {/* <Divider /> */}
       <List className="toolbar-left">
         <ListItem>
           {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
-          <ListItemText primary="User's Name" />
+          <ListItemText style={{color: cyan[500],fontWeight:"bolder"}} primary={`Welcome ${userName}`} />
 
           <ListItem button style={{ width: "10px" }} onClick={handleLogout}>
             <ExitToAppIcon />
           </ListItem>
         </ListItem>
+      <Divider />
 
         <AddTodo
           open={openTodo}
@@ -444,7 +395,9 @@ function TodoDrawer(props) {
       </List>
 
       {/* <Drawer /> */}
-      <Divider />
+      <Divider  />
+      <Divider  />
+
       <ListItem
         button
         onClick={handleCategory}

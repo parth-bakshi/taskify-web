@@ -46,6 +46,7 @@ function Signup() {
       let data = { email, password, name };
       if (!data.name) return enqueueSnackbar("Name is required", { variant: "warning" });
       if (!data.email) return enqueueSnackbar("Email is required", { variant: "warning" });
+      if(!data.email.includes("@")) return enqueueSnackbar("Use valid email",{variant:"warning"});
       if (!data.password) return enqueueSnackbar("Password is required", { variant: "warning" });
       if (data.password.length < 8) return enqueueSnackbar("Password should contain 8 characters", { variant: "warning" });
 
@@ -94,7 +95,7 @@ function Signup() {
             label="Email"
             type="text"
             onChange={(e) => {
-              setEmail(e.target.value);
+              setEmail(e.target.value.toLowerCase());
             }}
             fullWidth
           />

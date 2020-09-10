@@ -6,18 +6,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
-
+import { useSnackbar } from 'notistack';
 
 
 export default function AddCategory({open,onClose,handleSubmitCategory}) {
   const [category,setCategory]= React.useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
    const handleCategory=(e)=>{
-    let data= e.target.value
+    let data= e.target.value;
     setCategory(data)
-    console.log("DA",data)
   }
   const handleSubmit = ()=>{
+    if(category=="") return enqueueSnackbar("Please Add Category", {variant:"info"});
     handleSubmitCategory(category);
     onClose();
  

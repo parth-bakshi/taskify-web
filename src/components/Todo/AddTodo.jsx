@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 import { apiURLs } from "../../api_services/urls";
 import Cookies from "js-cookie";
+import { useSnackbar } from 'notistack';
 
 export default function AddTodo({ open, onClose, addTask, categories }) {
   const [category, setCategory] = React.useState("category");
@@ -36,6 +37,9 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
   const [todoForm, setTodoForm] = React.useState({
     ...formData,
   });
+
+  const { enqueueSnackbar } = useSnackbar();
+
 
   const handleTodoItem = (e) => {
     setTodoItem(e.target.value);
@@ -90,10 +94,15 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
         if (res.status == 200) {
           console.log("balle");
           addTask(res.data.data);
+          enqueueSnackbar("Todo Added Successfully",{variant:"success"});
+
         }
         console.log(res);
         // console.log(res);
-      });
+      }).catch((e)=>{
+        enqueueSnackbar("Failed to Add Todo",{variant:"error"});
+
+      })
 
     // console.log(data)
     onClose();
