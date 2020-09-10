@@ -23,15 +23,13 @@ import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissa
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import AllInboxIcon from "@material-ui/icons/AllInbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import moment from "moment-timezone";
-import momentMain from "moment";
+import { apiURLs } from "../../api_services/urls";
 
 import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
 import AddTodo from "../Todo/AddTodo";
 import axios from "axios";
 import SimpleCard from "./card";
-import { apiURLs } from "../../api_services/urls";
 import "./styles.css";
 
 import AddCategory from "../Category/AddCategory";

@@ -6,6 +6,9 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
+import axios from "axios";
+
+import { apiURLs } from "../../api_services/urls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,9 +39,20 @@ function Signup() {
     return <Redirect to="/todo" />;
   }
 
-  const handleSubmit = () => {
-    let data = { name, email, password };
-    console.log("data", data);
+  const handleSubmit = async () => {
+    try {
+      let data = { email, password, name };
+      const response = await axios.post(apiURLs.signup(), data);
+      console.log(response);
+      if (response.status === 201) {
+        Cookies.set("token", response.data.token);
+        Cookies.set("is_login", 1);
+        return (window.location.href = "/todo");
+      } else {
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <Fragment>

@@ -1,16 +1,19 @@
-import React, { Fragment } from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import moment, { isMoment } from 'moment';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import React, { Fragment } from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import Grid from "@material-ui/core/Grid";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import moment, { isMoment } from "moment";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import axios from "axios";
 import { apiURLs } from "../../api_services/urls";
 import Cookies from "js-cookie";
@@ -20,28 +23,26 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
   // const [selectedDate, setSelectedDate] = React.useState(moment(Date()).format("YYYY-MM-DD"));
   const [priority, setPriority] = React.useState("");
   const [todoItem, setTodoItem] = React.useState("");
-  const [dateTime, setDateTime] = React.useState(moment(Date()).format("YYYY-MM-DD"));
-  const [description, setDescription] = React.useState('')
+  const [dateTime, setDateTime] = React.useState(
+    moment(Date()).format("YYYY-MM-DD")
+  );
+  const [description, setDescription] = React.useState("");
   const formData = {
-    "name": '',
-    "category": "",
-    "date": "",
-    "description": ""
-  }
+    name: "",
+    category: "",
+    date: "",
+    description: "",
+  };
   const [todoForm, setTodoForm] = React.useState({
-    ...formData
-  })
-
+    ...formData,
+  });
 
   const handleTodoItem = (e) => {
     setTodoItem(e.target.value);
   };
 
-
   const handlePriority = (e) => {
     setPriority(e.target.value);
-
-
   };
   // const handleDateChange = (e) => {
   //   let date = moment(e.target.value).format("YYYY-MM-DD");
@@ -50,33 +51,33 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
   // };
 
   const handleChange = (e) => {
-    setCategory(e.target.value)
-
-  }
+    setCategory(e.target.value);
+  };
 
   const handleTimeChange = (e) => {
-    // setDateTime(moment(e.target.value).format("YYYY-MM-DD hh:mm:ss A Z"))
-    setDateTime(e.target.value)
-  }
+    // console.log(moment(e.target.value).format("YYYY-MM-DD hh:mm:ss A Z"));
+    setDateTime(moment(e.target.value).format("DD-MM-YYYY HH:mm"));
+    // console.log(e.target.value)
+    // setDateTime(e.target.value)
+  };
 
   const handleDescription = (e) => {
-    setDescription(e.target.value)
-  }
+    setDescription(e.target.value);
+  };
 
   const handleSubmit = () => {
-
     let data = {
       name: todoItem,
       category: category,
       date: dateTime,
-      description: description
-    }
+      description: description,
+    };
 
     setTodoForm({
-      ...data
+      ...data,
     });
     const params = JSON.stringify({
-      ...data
+      ...data,
     });
     axios
       .post(apiURLs.createTask(), params, {
@@ -88,7 +89,7 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
       .then((res) => {
         if (res.status == 200) {
           console.log("balle");
-          addTask(res.data.data)
+          addTask(res.data.data);
         }
         console.log(res);
         // console.log(res);
@@ -96,11 +97,16 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
 
     // console.log(data)
     onClose();
-
-  }
+  };
   return (
     <Fragment>
-      <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" aria-labelledby="add-todo-title">
+      <Dialog
+        open={open}
+        onClose={onClose}
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="add-todo-title"
+      >
         <DialogTitle id="add-todo-title">Add Todo</DialogTitle>
 
         <DialogContent>
@@ -141,7 +147,6 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                   step: 300, // 5 min
                 }}
                 onChange={handleTimeChange}
-
               />
             </Grid>
 
@@ -153,11 +158,10 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 value={category}
                 name="category"
                 onChange={handleChange}
-
               >
                 <MenuItem value={"category"}>Select Category</MenuItem>
                 {categories.map(function (currValue) {
-                  return <MenuItem value={currValue}> {currValue} </MenuItem>
+                  return <MenuItem value={currValue}> {currValue} </MenuItem>;
                 })}
                 {/* <MenuItem value={"category"}>Select Category</MenuItem>
                   <MenuItem value={'private'}>private</MenuItem>
@@ -181,8 +185,6 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 />
             </Grid> */}
 
-
-
             <Grid item xs={12} sm={12}>
               <TextField
                 autoFocus
@@ -194,15 +196,10 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 fullWidth
               />
             </Grid>
-
-
-
           </Grid>
-
         </DialogContent>
 
         <DialogActions>
-
           <Button onClick={handleSubmit} color="primary">
             Add
           </Button>
