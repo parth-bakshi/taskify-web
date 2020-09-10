@@ -44,7 +44,7 @@ import AddTodo from "../Todo/AddTodo";
 import axios from "axios";
 import SimpleCard from "./card";
 import "./styles.css";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 
 import AddCategory from "../Category/AddCategory";
 const drawerWidth = 240;
@@ -91,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
     color: green[500],
   },
 }));
-
 
 function TodoDrawer(props) {
   // const { window } = props;
@@ -142,8 +141,7 @@ function TodoDrawer(props) {
   const handleLogout = () => {
     Cookies.remove("token");
     Cookies.remove("is_login");
-
-    return <Redirect to="/login" />;
+    return (window.location.href = "/login");
   };
 
   const addTask = (task) => {
@@ -185,13 +183,17 @@ function TodoDrawer(props) {
       .then((res) => {
         if (res.status == 200) {
           setcategories([...tempArray]);
-          enqueueSnackbar("Category Added Successfully",{variant:"success"});
+          enqueueSnackbar("Category Added Successfully", {
+            variant: "success",
+          });
         }
         // console.log(res);
-      }).catch((e)=>{
-        enqueueSnackbar("Failed to Add, Please Change the Category Name",{variant:"error"})
-
       })
+      .catch((e) => {
+        enqueueSnackbar("Failed to Add, Please Change the Category Name", {
+          variant: "error",
+        });
+      });
 
     // localStorage.setItem('category',categories)
   };
@@ -294,13 +296,16 @@ function TodoDrawer(props) {
       <List className="toolbar-left">
         <ListItem>
           {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
-          <ListItemText style={{color: cyan[500],fontWeight:"bolder"}} primary={`Welcome ${userName}`} />
+          <ListItemText
+            style={{ color: cyan[500], fontWeight: "bolder" }}
+            primary={`Welcome ${userName}`}
+          />
 
           <ListItem button style={{ width: "10px" }} onClick={handleLogout}>
             <ExitToAppIcon />
           </ListItem>
         </ListItem>
-      <Divider />
+        <Divider />
 
         <AddTodo
           open={openTodo}
@@ -395,8 +400,8 @@ function TodoDrawer(props) {
       </List>
 
       {/* <Drawer /> */}
-      <Divider  />
-      <Divider  />
+      <Divider />
+      <Divider />
 
       <ListItem
         button
