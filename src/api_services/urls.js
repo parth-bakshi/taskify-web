@@ -1,4 +1,4 @@
-const baseURL = "https://taskify-api.herokuapp.com";
+const baseURL = "http://localhost:8000";
 
 export const apiURLs = {
   login: () => `${baseURL}/user/login`,
@@ -7,4 +7,5 @@ export const apiURLs = {
   toggleTask: () => `${baseURL}/task/toggle-task-status`,
   deleteTask: () => `${baseURL}/task/delete-task`,
   createTask: () => `${baseURL}/task/create`,
+  createCategory: () => `${baseURL}/user/create/category`,
 };

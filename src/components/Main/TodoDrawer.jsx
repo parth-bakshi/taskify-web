@@ -69,61 +69,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const tempArrayTasks = [
-  {
-    name: "parth",
-    _id:"1",
-    category: "work",
-    date: "23-10-2020",
-    description:
-      "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-                      lvc pqrstu vwxyz",
-    completeStatus: true,
-  },
-  {
-    name: "prateek",
-    _id:"2",
-    category: "work",
-    date: "23-10-2020",
-    description:
-      "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-                      lvc pqrstu vwxyz",
-    completeStatus: false,
-  },
-  {
-    name: "swapnil",
-    _id:"3",
-    category: "shopping",
-    date: "23-10-2020",
-    description:
-      "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-                      lvc pqrstu vwxyz",
-    completeStatus: true,
-  },
-  {
-    name: "unknown",
-    _id:"4",
-    category: "personal",
-    date: "23-10-2020",
-    description:
-      "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
-                      jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
-                      ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
-                      fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
-                      lvc pqrstu vwxyz",
-    completeStatus: false,
-  },
-];
-const tempArrayCategory = [];
+// const tempArrayTasks = [
+//   {
+//     name: "parth",
+//     _id:"1",
+//     category: "work",
+//     date: "23-10-2020",
+//     description:
+//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+//                       lvc pqrstu vwxyz",
+//     completeStatus: true,
+//   },
+//   {
+//     name: "prateek",
+//     _id:"2",
+//     category: "work",
+//     date: "23-10-2020",
+//     description:
+//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+//                       lvc pqrstu vwxyz",
+//     completeStatus: false,
+//   },
+//   {
+//     name: "swapnil",
+//     _id:"3",
+//     category: "shopping",
+//     date: "23-10-2020",
+//     description:
+//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+//                       lvc pqrstu vwxyz",
+//     completeStatus: true,
+//   },
+//   {
+//     name: "unknown",
+//     _id:"4",
+//     category: "personal",
+//     date: "23-10-2020",
+//     description:
+//       "abcdefgh ijklmonfevhcghjvvjkjbvjkjvnkjvnk \
+//                       jnvghjnbvcfghbvcfgyujvcftyujhvcfgujvcfyujhvcghjvcfyhbvcfghbvcfgujbvcfyujhbvcfghjvcf \
+//                       ghjhbvghjvcfyujbvfyujbvcftyujbvcfyujbcfgujhvcftyuhgvhjgcgjiugfcguiugfhjkjgcvjkljgfdghljg \
+//                       fhjkjcghkjfsfyuiufxkjcxjokjxhjkjcxkijckixghkjcxjgxvjkicxvhjkjvvjkjcxhjcvjkjcxcvhjbvjkjvcvk \
+//                       lvc pqrstu vwxyz",
+//     completeStatus: false,
+//   },
+// ];
+// const tempArrayCategory = [];
 
 function TodoDrawer(props) {
   // const { window } = props;
@@ -131,21 +131,17 @@ function TodoDrawer(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openTodo, setOpenTodo] = React.useState(Boolean);
-  const [categories, setcategories] = React.useState(tempArrayCategory);
-  const [allTasks, setAllTasks] = React.useState(tempArrayTasks);
+  const [categories, setcategories] = React.useState([]);
+  const [allTasks, setAllTasks] = React.useState([]);
   //above state will contain all data everytime
 
-  const [tasks, setTasks] = React.useState(tempArrayTasks);
+  const [tasks, setTasks] = React.useState([]);
   //above state will be responsible which tasks to display
 
   //fill  {tasks} and {alltasks} both in componentdidmount for the first time
 
   const [openCategory, setOpenCategory] = React.useState(Boolean);
 
-  //states for showing data
-  // const [showCompletedTask, setShowCompletedTask] = React.useState(false);
-  // const [showInCompletedTask, setShowInCompletedTask] = React.useState(false);
-  // const [showAllTask, setShowAllTask] = React.useState(true);
 
   useEffect(() => {
     //to fetch categories
@@ -196,7 +192,25 @@ function TodoDrawer(props) {
     // setCategoryItem([...categoryItem,category])
     let tempArray = [...categories];
     tempArray.push(category);
-    setcategories([...tempArray]);
+
+    const params = JSON.stringify({
+      "category": category,
+    });
+    //to create a category
+    axios
+      .post(apiURLs.createCategory(),params, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) => {
+        if(res.status==200){
+          setcategories([...tempArray]);
+        }
+        console.log(res);
+    });
+    
     // localStorage.setItem('category',categories)
   };
 
@@ -268,6 +282,28 @@ function TodoDrawer(props) {
     setAllTasks(tempArray);
   }
 
+  const toggleTaskState = (id)=>{
+    let tempArray = [...tasks];
+    for( let i = 0; i < tempArray.length; i++){
+      if ( tempArray[i]._id === id) { 
+        tempArray[i] = {...tempArray[i]};
+        tempArray[i].completeStatus = !tempArray[i].completeStatus;
+        break;
+      }
+    }
+    
+    setTasks(tempArray);
+    tempArray = [...allTasks];
+    for( var i = 0; i < tempArray.length; i++){ 
+      if ( tempArray[i]._id === id) {
+        tempArray[i] = {...tempArray[i]};
+        tempArray[i].completeStatus = !tempArray[i].completeStatus;
+        break;
+      }
+    }
+    setAllTasks(tempArray);
+  }
+
   const drawer = (
     <div>
       <div className={`${classes.toolbar} toolbar-left`} />
@@ -278,16 +314,13 @@ function TodoDrawer(props) {
           <ListItemText primary="User's Name" />
         </ListItem>
 
-        {/* <ListItem button onClick={handleAddTodo}>
-            <ListItemIcon><AddCircleIcon /></ListItemIcon>
-            <ListItemText primary={"Add Todo"} />
-          </ListItem> */}
         <AddTodo
           open={openTodo}
           onClose={() => {
             setOpenTodo(!openTodo);
           }}
           addTask={addTask}
+          categories={categories}
 
         />
 
@@ -317,13 +350,12 @@ function TodoDrawer(props) {
         {categories.map((text, index) => (
           <ListItem button key={text} onClick={handleCategoryTasks} data-value={text} className="category-group">
             <ListItemIcon>
-              {(text !== "personal" && text !=="work" && text !=="shopping" ) ?<CategoryIcon />:null}
-              {text==="personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
-              {text==="work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
-              {text==="shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null}
+              {(text !== "Personal" && text !=="Work" && text !=="Shopping" ) ?<CategoryIcon />:null}
+              {text==="Personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
+              {text==="Work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
+              {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null}
               {/* <CategoryIcon /> */}
             </ListItemIcon>
-
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -425,6 +457,7 @@ function TodoDrawer(props) {
                       description={task.description}
                       completeStatus={task.completeStatus}
                       deleteTask={deleteTask}
+                      toggleTaskState={toggleTaskState}
                     />
                   </Typography>
                 );

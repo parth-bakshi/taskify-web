@@ -90,8 +90,11 @@ export default function SimpleCard(props) {
         .then((res) => {
           if(res.status!=200){
             changeCompleteStatus(!completeStatus);
+          }else{
+            console.log("yipe");
+            props.toggleTaskState(props.id);
           }
-          // console.log(res);
+          console.log(res);
       });
 
       //api call for toggle status

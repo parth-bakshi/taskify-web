@@ -15,7 +15,7 @@ import axios from "axios";
 import { apiURLs } from "../../api_services/urls";
 import Cookies from "js-cookie";
 
-export default function AddTodo({open,onClose,addTask}) {
+export default function AddTodo({open,onClose,addTask,categories}) {
   const [category,setCategory]= React.useState("category");
   const [selectedDate, setSelectedDate] = React.useState(moment(Date()).format("YYYY-MM-DD"));
   const [priority,setPriority] = React.useState("");
@@ -135,17 +135,21 @@ export default function AddTodo({open,onClose,addTask}) {
             <Grid item xs={12} sm={6}>
                 <InputLabel id="categorySelect">Category</InputLabel>
                 <Select
-                labelId="categorySelect"
-                id="CategorySelect"
-                value={category}
-                name="category"
-                onChange={handleChange}
-                
+                  labelId="categorySelect"
+                  id="CategorySelect"
+                  value={category}
+                  name="category"
+                  onChange={handleChange}
+                  
                 >
-                <MenuItem value={"category"}>Select Category</MenuItem>
-                <MenuItem value={'private'}>private</MenuItem>
-                <MenuItem value={'work'}>work</MenuItem>
-                <MenuItem value={'shopping'}>shopping</MenuItem>
+                  
+                  {categories.map(function(currValue){
+                    return <MenuItem value={currValue}> {currValue} </MenuItem>
+                  })}
+                  {/* <MenuItem value={"category"}>Select Category</MenuItem>
+                  <MenuItem value={'private'}>private</MenuItem>
+                  <MenuItem value={'work'}>work</MenuItem>
+                  <MenuItem value={'shopping'}>shopping</MenuItem> */}
                 </Select>
             </Grid>
 
