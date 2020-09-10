@@ -79,10 +79,8 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
       })
       .then((res) => {
         if (res.status == 200) {
-          console.log("balle");
           addTask(res.data.data);
           enqueueSnackbar("Todo Added Successfully", { variant: "success" });
-
         }
         console.log(res);
         // console.log(res);
@@ -125,7 +123,6 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 label="Notify Me"
                 type="datetime-local"
                 defaultValue={ moment(Date()).format("YYYY-MM-DDTHH:MM")}
-                startDate={moment(Date()).format("YYYY-MM-DD")}
                 InputLabelProps={{
                   shrink: true,
                 }}
