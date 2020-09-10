@@ -24,6 +24,19 @@ import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfie
 import AllInboxIcon from "@material-ui/icons/AllInbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { apiURLs } from "../../api_services/urls";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import {
+  red,
+  pink,
+  blue,
+  green,
+  yellow,
+  orange,
+  deepOrange,
+  purple,
+  deepPurple,
+  cyan,
+} from "@material-ui/core/colors";
 
 import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -50,7 +63,8 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    backgroundColor: "rgb(30,32,34,0.8)",
+    // backgroundColor: "rgb(30,32,34,0.8)",
+    backgroundColor: "#344955",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -73,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginTop: "20%",
     justifyContent: "center",
+    color: green[500],
   },
 }));
 
@@ -176,6 +191,13 @@ function TodoDrawer(props) {
         setAllTasks(res.data.data);
       });
   }, []);
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    Cookies.remove("is_login");
+
+    return <Redirect to="/login" />;
+  };
 
   const addTask = (task) => {
     let tempArray = [...tasks];
@@ -322,7 +344,11 @@ function TodoDrawer(props) {
       <List className="toolbar-left">
         <ListItem>
           {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
-          <ListItemText primary={userName} />
+          <ListItemText primary="User's Name" />
+
+          <ListItem button style={{ width: "10px" }} onClick={handleLogout}>
+            <ExitToAppIcon />
+          </ListItem>
         </ListItem>
 
         <AddTodo
@@ -341,7 +367,7 @@ function TodoDrawer(props) {
           className="task-group"
         >
           <ListItemIcon>
-            <AllInboxIcon />
+            <AllInboxIcon style={{ color: orange[500] }} />
           </ListItemIcon>
           <ListItemText primary={"All"} />
         </ListItem>
@@ -353,7 +379,7 @@ function TodoDrawer(props) {
           className="task-group"
         >
           <ListItemIcon>
-            <SentimentVerySatisfiedIcon />
+            <SentimentVerySatisfiedIcon style={{ color: yellow[300] }} />
           </ListItemIcon>
           <ListItemText primary={"Completed Tasks"} data-value="incomplete" />
         </ListItem>
@@ -365,7 +391,7 @@ function TodoDrawer(props) {
           className="task-group"
         >
           <ListItemIcon>
-            <SentimentVeryDissatisfiedIcon />
+            <SentimentVeryDissatisfiedIcon style={{ color: red[500] }} />
           </ListItemIcon>
           <ListItemText primary={"Incomplete Tasks"} />
         </ListItem>
@@ -382,16 +408,28 @@ function TodoDrawer(props) {
           >
             <ListItemIcon>
               {text !== "Personal" && text !== "Work" && text !== "Shopping" ? (
-                <CategoryIcon />
+                <CategoryIcon style={{ color: yellow[500] }} />
               ) : null}
               {text === "Personal" ? (
-                <i className="fa fa-user fa-lg" aria-hidden="true"></i>
+                <i
+                  class="fa fa-user fa-lg"
+                  style={{ color: orange[500] }}
+                  aria-hidden="true"
+                ></i>
               ) : null}
               {text === "Work" ? (
-                <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+                <i
+                  class="fa fa-briefcase fa-lg"
+                  style={{ color: blue[500] }}
+                  aria-hidden="true"
+                ></i>
               ) : null}
               {text === "Shopping" ? (
-                <i className="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                <i
+                  class="fa fa-shopping-cart fa-lg"
+                  style={{ color: pink[500] }}
+                  aria-hidden="true"
+                ></i>
               ) : null}
               {/* <CategoryIcon /> */}
             </ListItemIcon>
@@ -410,7 +448,7 @@ function TodoDrawer(props) {
       <ListItem
         button
         onClick={handleCategory}
-        style={{ backgroundColor: "rgb(30,32,34,0.8)", color: "white" }}
+        style={{ backgroundColor: "#442C2E", color: "white" }}
       >
         <ListItemIcon>
           <AddCircleIcon />
@@ -448,7 +486,7 @@ function TodoDrawer(props) {
         <div className={classes.root}>
           <CssBaseline />
           <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar>
+            <Toolbar style={{ display: "flex" }}>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -458,8 +496,8 @@ function TodoDrawer(props) {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" noWrap>
-                ToDo App
+              <Typography variant="h5" noWrap>
+                Todo App
               </Typography>
             </Toolbar>
           </AppBar>
@@ -520,7 +558,7 @@ function TodoDrawer(props) {
             <div button onClick={handleAddTodo} className="add-button">
               <ListItemIcon>
                 <AddCircleIcon
-                  style={{ width: "100%", height: "100%", color: "#408CAA" }}
+                  style={{ width: "100%", height: "100%", color: "#442C2E  " }}
                 />
               </ListItemIcon>
             </div>

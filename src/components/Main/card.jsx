@@ -15,8 +15,9 @@ const useStyles = makeStyles({
   root:{
     minWidth: 275,
     maxWidth: "100%",
-    borderRadius:"12px",
+    borderRadius:"18px",
     backgroundColor:"rgb(30,32,34,0.8)",
+    backgroundColor :"#22375a",
     color:"lightgray",
     transition:"0.5s",
     "&:hover":{
