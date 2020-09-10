@@ -25,6 +25,7 @@ import AllInboxIcon from "@material-ui/icons/AllInbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { apiURLs } from "../../api_services/urls";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import FaceIcon from "@material-ui/icons/Face";
 import {
   red,
   pink,
@@ -295,7 +296,9 @@ function TodoDrawer(props) {
       <div className={`${classes.toolbar} toolbar-left`} />
       <List className="toolbar-left">
         <ListItem>
-          {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
+          <ListItemIcon>
+            <FaceIcon fontSize={"large"} style={{ color: green[500] }} />
+          </ListItemIcon>
           <ListItemText
             style={{ color: cyan[500], fontWeight: "bolder" }}
             primary={`Welcome ${userName}`}
