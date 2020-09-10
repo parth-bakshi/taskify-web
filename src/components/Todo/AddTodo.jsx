@@ -122,7 +122,7 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 id="time"
                 label="Notify Me"
                 type="datetime-local"
-                defaultValue={ moment(Date()).format("YYYY-MM-DDTHH:MM")}
+                defaultValue={ moment(Date()).format("YYYY-MM-DDTHH:mm")}
                 InputLabelProps={{
                   shrink: true,
                 }}

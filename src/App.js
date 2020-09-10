@@ -80,7 +80,7 @@ function App() {
           });
         }
       });
-  }, 1000);
+  }, 30000);
 
   return (
     <Router>

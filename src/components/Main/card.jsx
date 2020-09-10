@@ -153,7 +153,7 @@ export default function SimpleCard(props) {
             {props.name}
           </div>
           <div> {props.category} </div>
-          <div> {moment(props.date).subtract(moment.duration("5:30")).format("MM-DD-YYYY || hh:mm a")} </div>
+          <div> {moment(props.date).format("MM-DD-YYYY || hh:mm a")} </div>
           <div><input type="checkbox" className="checkbox" checked={completeStatus} /></div>
         </div>
         <div className={classes.descriptionTop}>
