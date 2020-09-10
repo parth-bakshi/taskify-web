@@ -294,7 +294,7 @@ function TodoDrawer(props) {
       <div className={`${classes.toolbar} toolbar-left`} />
       <List className="toolbar-left">
         <ListItem>
-          <ListItemIcon><FaceIcon style={{ color: green[500] }} /></ListItemIcon>
+          <ListItemIcon><FaceIcon fontSize={"large"} style={{ color: green[500] }} /></ListItemIcon>
           <ListItemText style={{color: cyan[500],fontWeight:"bolder"}} primary={`Welcome ${userName}`} />
 
           <ListItem button style={{ width: "10px" }} onClick={handleLogout}>

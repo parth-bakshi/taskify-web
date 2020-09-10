@@ -82,8 +82,8 @@ const useStyles = makeStyles({
   },
   deleteButton: {
     width: "10%",
-    padding:"2% 0 0 4%",
-    
+    padding: "2% 0 0 4%",
+
   }
 });
 
@@ -153,14 +153,15 @@ export default function SimpleCard(props) {
             {props.name}
           </div>
           <div> {props.category} </div>
-          <div> {moment(props.date).subtract(moment.duration("5:30") ).format("MM-DD-YYYY || hh:mm a")} </div>
+          <div> {moment(props.date).subtract(moment.duration("5:30")).format("MM-DD-YYYY || hh:mm a")} </div>
           <div><input type="checkbox" className="checkbox" checked={completeStatus} /></div>
         </div>
         <div className={classes.descriptionTop}>
           <div className={classes.description}> {props.description} </div>
           <div className={classes.deleteButton}>
             <Button p={5}>
-            <DeleteIcon color={"secondary"}  onClick={deleteTask} />
+
+              <DeleteIcon fontSize={"large"} color={"secondary"} onClick={deleteTask} />
 
             </Button>
           </div>
