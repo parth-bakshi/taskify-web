@@ -6,4 +6,5 @@ export const apiURLs = {
   getTasks: () => `${baseURL}/task/get-all-tasks`,
   toggleTask: () => `${baseURL}/task/toggle-task-status`,
   deleteTask: () => `${baseURL}/task/delete-task`,
+  createTask: () => `${baseURL}/task/create`,
 };

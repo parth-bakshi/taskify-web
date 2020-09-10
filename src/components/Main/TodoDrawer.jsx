@@ -172,7 +172,14 @@ function TodoDrawer(props) {
     }, []
   );
 
-  
+  const addTask = (task) => {
+    let tempArray = [...tasks];
+    tempArray.push(task);
+    setTasks(tempArray);
+    tempArray = [...allTasks];
+    tempArray.push(task);
+    setAllTasks(tempArray);
+  }
 
   const handleCategory = () => {
     setOpenCategory(true);
@@ -280,6 +287,8 @@ function TodoDrawer(props) {
           onClose={() => {
             setOpenTodo(!openTodo);
           }}
+          addTask={addTask}
+
         />
 
         <ListItem button onClick={handleTask} data-value="all" className="task-group">

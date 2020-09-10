@@ -11,9 +11,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import moment, { isMoment } from 'moment';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
+import axios from "axios";
+import { apiURLs } from "../../api_services/urls";
+import Cookies from "js-cookie";
 
-
-export default function AddTodo({open,onClose}) {
+export default function AddTodo({open,onClose,addTask}) {
   const [category,setCategory]= React.useState("category");
   const [selectedDate, setSelectedDate] = React.useState(moment(Date()).format("YYYY-MM-DD"));
   const [priority,setPriority] = React.useState("");
@@ -21,7 +23,7 @@ export default function AddTodo({open,onClose}) {
   const [time,setTime] =React.useState('');
   const [description,setDescription]= React.useState('')
   const formData= {  
-      "todoItem" :'',
+      "name" :'',
         "priority" : "",
         "category":"",
         "date":"",
@@ -65,7 +67,7 @@ export default function AddTodo({open,onClose}) {
   const handleSubmit = ()=>{
       
     let data =  {
-        todoItem :todoItem,
+        name :todoItem,
         priority : priority,
         category:category,
         date:selectedDate,
@@ -76,8 +78,26 @@ export default function AddTodo({open,onClose}) {
     setTodoForm({ 
      ...data
     });
+    const params = JSON.stringify({
+      ...data
+    });
+    axios
+      .post(apiURLs.createTask(),params, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+          "content-type": "application/json",
+        },
+      })
+      .then((res) => {
+        if(res.status==200){
+          console.log("balle");
+          addTask(res.data.data)
+        }
+        console.log(res);
+        // console.log(res);
+    });
     
-    console.log(data)
+    // console.log(data)
     onClose();
   
   }
