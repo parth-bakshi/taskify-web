@@ -133,6 +133,7 @@ function TodoDrawer(props) {
   const [openTodo, setOpenTodo] = React.useState(Boolean);
   const [categories, setcategories] = React.useState([]);
   const [allTasks, setAllTasks] = React.useState([]);
+  const [userName, setUsername] = React.useState("");
   //above state will contain all data everytime
 
   const [tasks, setTasks] = React.useState([]);
@@ -141,7 +142,6 @@ function TodoDrawer(props) {
   //fill  {tasks} and {alltasks} both in componentdidmount for the first time
 
   const [openCategory, setOpenCategory] = React.useState(Boolean);
-
 
   useEffect(() => {
     //to fetch categories
@@ -152,8 +152,9 @@ function TodoDrawer(props) {
         },
       })
       .then((res) => {
+        setUsername(res.data.user.name);
         setcategories(res.data.user.categories);
-    });
+      });
     //to fetch all tasks
     axios
       .get(apiURLs.getTasks(), {
@@ -164,9 +165,8 @@ function TodoDrawer(props) {
       .then((res) => {
         setTasks(res.data.data);
         setAllTasks(res.data.data);
-    });
-    }, []
-  );
+      });
+  }, []);
 
   const addTask = (task) => {
     let tempArray = [...tasks];
@@ -175,7 +175,7 @@ function TodoDrawer(props) {
     tempArray = [...allTasks];
     tempArray.push(task);
     setAllTasks(tempArray);
-  }
+  };
 
   const handleCategory = () => {
     setOpenCategory(true);
@@ -194,23 +194,23 @@ function TodoDrawer(props) {
     tempArray.push(category);
 
     const params = JSON.stringify({
-      "category": category,
+      category: category,
     });
     //to create a category
     axios
-      .post(apiURLs.createCategory(),params, {
+      .post(apiURLs.createCategory(), params, {
         headers: {
           Authorization: `Bearer ${Cookies.get("token")}`,
           "content-type": "application/json",
         },
       })
       .then((res) => {
-        if(res.status==200){
+        if (res.status == 200) {
           setcategories([...tempArray]);
         }
         console.log(res);
-    });
-    
+      });
+
     // localStorage.setItem('category',categories)
   };
 
@@ -233,76 +233,78 @@ function TodoDrawer(props) {
   // };
   const handleTask = (e) => {
     console.log(e.target.closest(".task-group").getAttribute("data-value"));
-    let selectedElement = e.target.closest(".task-group").getAttribute("data-value");
+    let selectedElement = e.target
+      .closest(".task-group")
+      .getAttribute("data-value");
 
-    if(selectedElement==="complete"){
+    if (selectedElement === "complete") {
       selectedElement = true;
-    }
-    else if(selectedElement==="incomplete"){
+    } else if (selectedElement === "incomplete") {
       selectedElement = false;
     }
     let tempArray = [...allTasks];
-    tempArray = tempArray.filter((task)=>{
-      if(selectedElement==="all"){
+    tempArray = tempArray.filter((task) => {
+      if (selectedElement === "all") {
         return true;
       }
-      return selectedElement===task.completeStatus;
-    })
+      return selectedElement === task.completeStatus;
+    });
     setTasks(tempArray);
-
   };
 
   const handleCategoryTasks = (e) => {
     console.log(e.target.closest(".category-group").getAttribute("data-value"));
-    let selectedCategory = e.target.closest(".category-group").getAttribute("data-value");
+    let selectedCategory = e.target
+      .closest(".category-group")
+      .getAttribute("data-value");
 
     let tempArray = [...allTasks];
-    tempArray = tempArray.filter((task)=>{
-      return selectedCategory===task.category;
-    })
+    tempArray = tempArray.filter((task) => {
+      return selectedCategory === task.category;
+    });
     setTasks(tempArray);
   };
 
-  const deleteTask = (id)=>{
+  const deleteTask = (id) => {
     let tempArray = [...tasks];
-    for( var i = 0; i < tempArray.length; i++){ 
-      if ( tempArray[i]._id === id) { 
-        tempArray.splice(i, 1); 
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray.splice(i, 1);
         break;
       }
     }
     setTasks(tempArray);
     tempArray = [...allTasks];
-    for( var i = 0; i < tempArray.length; i++){ 
-      if ( tempArray[i]._id === id) { 
-        tempArray.splice(i, 1); 
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray.splice(i, 1);
         break;
       }
     }
     setAllTasks(tempArray);
-  }
+  };
 
-  const toggleTaskState = (id)=>{
+  const toggleTaskState = (id) => {
     let tempArray = [...tasks];
-    for( let i = 0; i < tempArray.length; i++){
-      if ( tempArray[i]._id === id) { 
-        tempArray[i] = {...tempArray[i]};
+    for (let i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray[i] = { ...tempArray[i] };
         tempArray[i].completeStatus = !tempArray[i].completeStatus;
         break;
       }
     }
-    
+
     setTasks(tempArray);
     tempArray = [...allTasks];
-    for( var i = 0; i < tempArray.length; i++){ 
-      if ( tempArray[i]._id === id) {
-        tempArray[i] = {...tempArray[i]};
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i]._id === id) {
+        tempArray[i] = { ...tempArray[i] };
         tempArray[i].completeStatus = !tempArray[i].completeStatus;
         break;
       }
     }
     setAllTasks(tempArray);
-  }
+  };
 
   const drawer = (
     <div>
@@ -311,7 +313,7 @@ function TodoDrawer(props) {
       <List className="toolbar-left">
         <ListItem>
           {/* <ListItemIcon><AddCircleIcon /></ListItemIcon> */}
-          <ListItemText primary="User's Name" />
+          <ListItemText primary={userName} />
         </ListItem>
 
         <AddTodo
@@ -321,24 +323,38 @@ function TodoDrawer(props) {
           }}
           addTask={addTask}
           categories={categories}
-
         />
 
-        <ListItem button onClick={handleTask} data-value="all" className="task-group">
+        <ListItem
+          button
+          onClick={handleTask}
+          data-value="all"
+          className="task-group"
+        >
           <ListItemIcon>
             <AllInboxIcon />
           </ListItemIcon>
           <ListItemText primary={"All"} />
         </ListItem>
 
-        <ListItem button onClick={handleTask} data-value="complete" className="task-group">
+        <ListItem
+          button
+          onClick={handleTask}
+          data-value="complete"
+          className="task-group"
+        >
           <ListItemIcon>
             <SentimentVerySatisfiedIcon />
           </ListItemIcon>
-          <ListItemText primary={"Completed Tasks"} data-value="incomplete"/>
+          <ListItemText primary={"Completed Tasks"} data-value="incomplete" />
         </ListItem>
 
-        <ListItem button onClick={handleTask} data-value="incomplete" className="task-group">
+        <ListItem
+          button
+          onClick={handleTask}
+          data-value="incomplete"
+          className="task-group"
+        >
           <ListItemIcon>
             <SentimentVeryDissatisfiedIcon />
           </ListItemIcon>
@@ -348,12 +364,26 @@ function TodoDrawer(props) {
       <Divider />
       <List className="toolbar-left">
         {categories.map((text, index) => (
-          <ListItem button key={text} onClick={handleCategoryTasks} data-value={text} className="category-group">
+          <ListItem
+            button
+            key={text}
+            onClick={handleCategoryTasks}
+            data-value={text}
+            className="category-group"
+          >
             <ListItemIcon>
-              {(text !== "Personal" && text !=="Work" && text !=="Shopping" ) ?<CategoryIcon />:null}
-              {text==="Personal"?<i class="fa fa-user fa-lg" aria-hidden="true"></i>:null}
-              {text==="Work"?<i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>:null}
-              {text==="Shopping"?<i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>:null}
+              {text !== "Personal" && text !== "Work" && text !== "Shopping" ? (
+                <CategoryIcon />
+              ) : null}
+              {text === "Personal" ? (
+                <i class="fa fa-user fa-lg" aria-hidden="true"></i>
+              ) : null}
+              {text === "Work" ? (
+                <i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+              ) : null}
+              {text === "Shopping" ? (
+                <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+              ) : null}
               {/* <CategoryIcon /> */}
             </ListItemIcon>
             <ListItemText primary={text} />
@@ -444,25 +474,25 @@ function TodoDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-          {
-            //show tasks
-              tasks.map((task, index) => {
-                return (
-                  <Typography paragraph key={task._id}>
-                    <SimpleCard
-                      id={task._id}
-                      name={task.name}
-                      category={task.category}
-                      date={task.date}
-                      description={task.description}
-                      completeStatus={task.completeStatus}
-                      deleteTask={deleteTask}
-                      toggleTaskState={toggleTaskState}
-                    />
-                  </Typography>
-                );
-              })
-          }
+        {
+          //show tasks
+          tasks.map((task, index) => {
+            return (
+              <Typography paragraph key={task._id}>
+                <SimpleCard
+                  id={task._id}
+                  name={task.name}
+                  category={task.category}
+                  date={task.date}
+                  description={task.description}
+                  completeStatus={task.completeStatus}
+                  deleteTask={deleteTask}
+                  toggleTaskState={toggleTaskState}
+                />
+              </Typography>
+            );
+          })
+        }
 
         <div button onClick={handleAddTodo} className="add-button">
           <ListItemIcon>
