@@ -108,6 +108,7 @@ function TodoDrawer(props) {
   const [userName, setUsername] = React.useState("");
   //above state will contain all data everytime
   const [loading, setLoading] = React.useState(true);
+  const [activeCategory, setActiveCategory] = React.useState("");
 
   const [tasks, setTasks] = React.useState([]);
   //above state will be responsible which tasks to display
@@ -253,6 +254,7 @@ function TodoDrawer(props) {
   //   setShowAllTask(false);
   // };
   const handleTask = (e) => {
+    setActiveCategory("");
     console.log(e.target.closest(".task-group").getAttribute("data-value"));
     let selectedElement = e.target
       .closest(".task-group")
@@ -274,7 +276,9 @@ function TodoDrawer(props) {
   };
 
   const handleCategoryTasks = (e) => {
-    console.log(e.target.closest(".category-group").getAttribute("data-value"));
+    setActiveCategory(
+      e.target.closest(".category-group").getAttribute("data-value")
+    );
     let selectedCategory = e.target
       .closest(".category-group")
       .getAttribute("data-value");
@@ -495,6 +499,14 @@ function TodoDrawer(props) {
               </IconButton>
               <Typography variant="h5" noWrap>
                 Todo App
+              </Typography>
+
+              <Typography
+                variant="p"
+                noWrap
+                style={{ marginLeft: "auto", fontSize: "15px" }}
+              >
+                {activeCategory}
               </Typography>
             </Toolbar>
           </AppBar>
