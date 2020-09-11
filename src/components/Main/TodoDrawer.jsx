@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: drawerWidth,
     },
     // backgroundColor: "rgb(30,32,34,0.8)",
-    backgroundColor: "#344955",
+    backgroundColor: "#031f4c",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: "#344955",
   },
   content: {
     flexGrow: 1,
@@ -443,7 +444,7 @@ function TodoDrawer(props) {
       <ListItem
         button
         onClick={handleCategory}
-        style={{ backgroundColor: "#442C2E", color: "white" }}
+        style={{ backgroundColor: "#5d7d90", color: "white" }}
       >
         <ListItemIcon>
           <AddCircleIcon />
@@ -553,7 +554,7 @@ function TodoDrawer(props) {
             <div button onClick={handleAddTodo} className="add-button">
               <ListItemIcon>
                 <AddCircleIcon
-                  style={{ width: "100%", height: "100%", color: "#442C2E  " }}
+                  style={{ width: "100%", height: "100%", color: "#5d7d90" }}
                 />
               </ListItemIcon>
             </div>
