@@ -26,6 +26,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { apiURLs } from "../../api_services/urls";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import FaceIcon from "@material-ui/icons/Face";
+import moment from "moment";
+import Push from "push.js";
+import axios from "axios";
 import {
   red,
   pink,
@@ -42,7 +45,6 @@ import {
 import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
 import AddTodo from "../Todo/AddTodo";
-import axios from "axios";
 import SimpleCard from "./card";
 import "./styles.css";
 import { useSnackbar } from "notistack";
@@ -112,6 +114,38 @@ function TodoDrawer(props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const [openCategory, setOpenCategory] = React.useState(Boolean);
+
+  // settimeout
+
+  setInterval(
+    () => {
+      allTasks.map((task) => {
+        const taskDate = moment(task.date, "DD-MM-YYYY HH:mm");
+        console.log(taskDate.minute() - moment().minute() === 1);
+        if (
+          taskDate.date() === moment().date() &&
+          taskDate.month() === moment().month() &&
+          taskDate.year() === moment().year() &&
+          taskDate.hour() === moment().hour() &&
+          taskDate.minute() - moment().minute() === 1 &&
+          localStorage.getItem("id") !== task._id
+        ) {
+          localStorage.setItem("id", task._id);
+          Push.create(task.name, {
+            body: task.description,
+            icon: "/icon.png",
+            timeout: 6000,
+            onClick: function () {
+              window.focus();
+              this.close();
+            },
+          });
+        }
+      });
+    },
+
+    1000
+  );
 
   useEffect(() => {
     //to fetch categories

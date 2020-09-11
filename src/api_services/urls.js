@@ -1,6 +1,6 @@
 // const baseURL = "https://taskify-api.herokuapp.com";
-const baseURL = "http://localhost:8000";
-const devUrl = "https://taskify-api.herokuapp.com";
+// const baseURL = "http://localhost:8000";
+const baseURL = "https://taskify-api.herokuapp.com";
 
 export const apiURLs = {
   login: () => `${baseURL}/user/login`,

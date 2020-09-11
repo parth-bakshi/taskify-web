@@ -14,7 +14,7 @@ import moment, { isMoment } from "moment";
 import axios from "axios";
 import { apiURLs } from "../../api_services/urls";
 import Cookies from "js-cookie";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 
 export default function AddTodo({ open, onClose, addTask, categories }) {
   const [category, setCategory] = React.useState("category");
@@ -33,7 +33,6 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
 
   const { enqueueSnackbar } = useSnackbar();
 
-
   const handleTodoItem = (e) => {
     setTodoItem(e.target.value);
   };
@@ -44,7 +43,6 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
 
   const handleTimeChange = (e) => {
     setDateTime(moment(e.target.value).format("DD-MM-YYYY HH:mm"));
-
   };
 
   const handleDescription = (e) => {
@@ -52,10 +50,18 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
   };
 
   const handleSubmit = () => {
-    if (!todoItem) return enqueueSnackbar("Please Add Todo Item Name", { variant: "info" });
-    if (!dateTime) return enqueueSnackbar("Please Select Date and Time to Notify", { variant: "info" });
-    if (category === "category") return enqueueSnackbar("Please Select Category", { variant: "info" });
-    if (!description) return enqueueSnackbar("Please Add Todo Item Description", { variant: "info" });
+    if (!todoItem)
+      return enqueueSnackbar("Please Add Todo Item Name", { variant: "info" });
+    if (!dateTime)
+      return enqueueSnackbar("Please Select Date and Time to Notify", {
+        variant: "info",
+      });
+    if (category === "category")
+      return enqueueSnackbar("Please Select Category", { variant: "info" });
+    if (!description)
+      return enqueueSnackbar("Please Add Todo Item Description", {
+        variant: "info",
+      });
 
     let data = {
       name: todoItem,
@@ -84,10 +90,10 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
         }
         console.log(res);
         // console.log(res);
-      }).catch((e) => {
-        enqueueSnackbar("Failed to Add Todo", { variant: "error" });
-
       })
+      .catch((e) => {
+        enqueueSnackbar("Failed to Add Todo", { variant: "error" });
+      });
 
     // console.log(data)
     onClose();
@@ -122,7 +128,7 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 id="time"
                 label="Notify Me"
                 type="datetime-local"
-                defaultValue={ moment(Date()).format("YYYY-MM-DDTHH:MM")}
+                defaultValue={moment(Date()).format("YYYY-MM-DDTHH:mm")}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -146,10 +152,8 @@ export default function AddTodo({ open, onClose, addTask, categories }) {
                 {categories.map(function (currValue) {
                   return <MenuItem value={currValue}> {currValue} </MenuItem>;
                 })}
-
               </Select>
             </Grid>
-
 
             <Grid item xs={12} sm={12}>
               <TextField

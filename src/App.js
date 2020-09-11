@@ -44,44 +44,6 @@ function App() {
     else localStorage.setItem("category", category);
   }, []);
 
-  //settimeout
-
-  setInterval(() => {
-    axios
-      .get(apiURLs.getTasks(), {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      })
-      .then((response) => {
-        if (response.data.data) {
-          response.data.data.map((task) => {
-            const taskDate = moment(task.date, "DD-MM-YYYY HH:mm");
-            console.log(taskDate.minute() - moment().minute() === 1);
-            if (
-              taskDate.date() === moment().date() &&
-              taskDate.month() === moment().month() &&
-              taskDate.year() === moment().year() &&
-              taskDate.hour() === moment().hour() &&
-              taskDate.minute() - moment().minute() === 1 &&
-              localStorage.getItem("id") !== task._id
-            ) {
-              localStorage.setItem("id", task._id);
-              Push.create(task.name, {
-                body: task.description,
-                icon: "/icon.png",
-                timeout: 6000,
-                onClick: function () {
-                  window.focus();
-                  this.close();
-                },
-              });
-            }
-          });
-        }
-      });
-  }, 1000);
-
   return (
     <Router>
       <Fragment>
